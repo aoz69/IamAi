@@ -10,11 +10,9 @@ exports.connect = async (req, res) => {
 
     
   } catch (error) {
-    console.log("Db Error!"  +error);
+    res.json({error: "error connecting to database"});
+    console.log("Db Error! "  + error);
     
   }
     
-  };
-  
-
-  // module.exports = con;
+};
