@@ -8,7 +8,6 @@ exports.connect = async (req, res) => {
     );
     console.log("Db connected");
 
-    
   } catch (error) {
     res.json({error: "error connecting to database"});
     console.log("Db Error! "  + error);
@@ -16,3 +15,11 @@ exports.connect = async (req, res) => {
   }
     
 };
+
+exports.disconnect = function(){
+  mongoose.connection.close(
+    function(){
+        console.log("connection to database has been closed");
+    }
+);
+} 
