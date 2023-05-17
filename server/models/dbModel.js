@@ -13,6 +13,14 @@ const userModel = new mongoose.Schema({
     password:{
         type: String,
         require:true
+    },
+    createdAt:{
+        type: Date,
+        require:true
+    },
+    updatedAt:{
+        type: Date,
+        require:true
     }
 });
 

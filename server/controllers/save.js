@@ -11,7 +11,7 @@ exports.insertUsers = async (req,res) =>{
         console.log("error " + error);
         return res.json({error : "error occured while hashing password"});
     }
-    dbcon.connect;
+    dbcon.connect();
     const user = new dbModel.userModel({
         name: req.body.name,
         role: req.body.role,
@@ -25,18 +25,18 @@ exports.insertUsers = async (req,res) =>{
         session._id = user._id;
         res.json({success: "saved"});
         console.log("success");
-        dbcon.disconnect;
+        dbcon.disconnect();
 
 
     } catch (error) {
         res.json({error: "error saving user to dabatase"});
         console.log("error " + error);
-        dbcon.disconnect;
+        dbcon.disconnect();
     }
 }
 
 exports.insertProducts = async (req,res) =>{
-    dbcon.connect;
+    dbcon.connect();
     try {
         const products = new dbModel.productModel({
             name: req.body.name,
@@ -48,29 +48,29 @@ exports.insertProducts = async (req,res) =>{
         });
         res.json({success: "saved"});
         console.log("success");
-        dbcon.disconnect;
+        dbcon.disconnect();
         
     } catch (error) {
         res.json({error: "error saving products to dabatase"});
         console.log("error " + error);
-        dbcon.disconnect;
+        dbcon.disconnect();
     }
 }
 
 
 exports.insertCategory = async (req,res) =>{
-    dbcon.connect;
+    dbcon.connect();
     try {
         const category = new dbModel.categoryModel({
             name: req.body.name
         });
         res.json({success: "saved"});
         console.log("success");
-        dbcon.disconnect;
+        dbcon.disconnect();
         
     } catch (error) {
         res.json({error: "error saving category to dabatase"});
         console.log("error " + error);
-        dbcon.disconnect;
+        dbcon.disconnect();
     }
 }
