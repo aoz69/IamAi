@@ -12,7 +12,7 @@ exports.fetchUsers = async (req, res) => {
     dbcon.disconnect();
 };
 
-//only gets name and id of user-----------> ME FUNCTION
+//only gets name and id of user
 exports.fetchUsersName = async (req, res) => {
     dbcon.connect();
     if (req.session.userName) {
@@ -60,3 +60,5 @@ exports.fetchBarCode = async (req, res) => {
     res.json({ "all product data": product });
     dbcon.disconnect();
 };
+
+
