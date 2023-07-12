@@ -48,29 +48,31 @@ exports.insertProducts = async (req,res) =>{
         });
         res.json({success: "saved"});
         console.log("success");
-        dbcon.disconnect();
+        // dbcon.disconnect();
         
     } catch (error) {
-        res.json({error: "error saving products to dabatase"});
+        res.json({error: "error saving products to dabatase"} +error );
         console.log("error " + error);
         dbcon.disconnect();
     }
 }
 
-
-exports.insertCategory = async (req,res) =>{
-    dbcon.connect();
+exports.insertCategory = async (req, res) => {
     try {
-        const category = new dbModel.categoryModel({
-            name: req.body.name
-        });
-        res.json({success: "saved"});
-        console.log("success");
-        dbcon.disconnect();
-        
+      const name = req.body.name;
+  
+      if (!name) {
+        return res.status(400).json({ error: "Name field is required" });
+      }
+  
+      const category = new dbModel.categoryModel({
+        name: name
+      });
+  
+      const saveCategory = await category.save();
+      res.json({ success: "Category saved successfully" });
+      console.log("Category saved successfully");
     } catch (error) {
-        res.json({error: "error saving category to dabatase"});
-        console.log("error " + error);
-        dbcon.disconnect();
+      res.status(500).json({ error: "Error saving category to the database", details: error });
     }
-}
+  };
