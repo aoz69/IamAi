@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import logo from '../images/logo.jpg'; 
 
-function App() {
+function Nav() {
   const [openDrawer, toggleDrawer] = useState(false);
   const drawerRef = useRef(null);
 
@@ -24,7 +25,9 @@ function App() {
       <CSSReset />
 
       <Navbar.Wrapper>
-        <Navbar.Logo>IMS</Navbar.Logo>
+        <Navbar.Logo> 
+          <img src={logo} height={'50px'} />
+        </Navbar.Logo>
 
         <HamburgerButton.Wrapper onClick={() => toggleDrawer(true)}>
           <HamburgerButton.Lines />
@@ -46,7 +49,6 @@ const Styles = {
   Wrapper: styled.main`
     display: flex;
     background-color: #eeeeee;
-    height: 100vh;
   `
 };
 
@@ -71,7 +73,6 @@ const Navbar = {
     }
   `,
   Logo: styled.h1`
-    border: 1px solid gray;
     padding: 0.5rem 1rem;
   `,
   Items: styled.ul`
@@ -175,7 +176,7 @@ const CSSReset = createGlobalStyle`
   }
 
   html {
-    font-size: 62.5%; /*1rem = 10px*/
+    font-size: 62.5%; 
     box-sizing: border-box;      
   }  
 
@@ -185,4 +186,4 @@ const CSSReset = createGlobalStyle`
   }
 `;
 
-export default App;
+export default Nav;
