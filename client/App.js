@@ -11,7 +11,6 @@ import nav from './src/component/nav';
 import dashtest from './src/component/dashtest';
 
 
-
 const Stack = createNativeStackNavigator();
 
 function App() {
