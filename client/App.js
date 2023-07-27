@@ -1,5 +1,3 @@
-
-import { SafeAreaView, StyleSheet, Text, View, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -9,7 +7,6 @@ import home from './src/component/home'
 import test from './src/component/fetchTest';
 import nav from './src/component/nav';
 import dashtest from './src/component/dashtest';
-
 
 const Stack = createNativeStackNavigator();
 
