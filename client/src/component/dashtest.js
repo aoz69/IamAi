@@ -3,15 +3,14 @@ import { View, Text, Button, StyleSheet, useWindowDimensions } from 'react-nativ
 import { useNavigation } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Nav from '../component/nav';
-import Index from '../component/pie';
-
+import Pie from '../component/pie';
 
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
   const [productData, setProductData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/fetchProductNumb')
+    fetch('http://192.168.1.69:3000/fetchProductNumb')
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -21,6 +20,7 @@ export default function Dash() {
       })
       .then(data => {
         setProductData(data.productData);
+
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -31,21 +31,27 @@ export default function Dash() {
   const numColumns = windowWidth >= 768 ? 2 : 1;
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    // <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Nav />
         {Array.from({ length: numColumns }, (_, index) => (
           <View key={index} style={styles.column}>
             {windowWidth >= 768 ? ( // Render different content for larger screens
-            <Index />
+            <Pie />
 
-            ) : ( // Render different content for smaller screens
-            <Index />
+            // *********************************************************************** MOBILE VIEW *********************************************************************** 
+            ) : ( 
+              <>
+              <View styles={styles.grid}>
+                <Pie />
+                <Text>{productData}</Text>
+              </View>
+            </>
             )}
           </View>
         ))}
       </View>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 }
 
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 10,
   },
-  safeArea: {
-    flex: 1,
-  },
+  // safeArea: {
+  //   flex: 1,
+  // },
 });
