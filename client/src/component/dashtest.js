@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, Text, Button, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Nav from '../component/nav';
@@ -20,60 +20,87 @@ export default function Dash() {
       })
       .then(data => {
         setProductData(data.productData);
-
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
   }, []);
 
-  // Calculate the number of columns based on the window width
-  const numColumns = windowWidth >= 768 ? 2 : 1;
-
   return (
-    // <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Nav />
-        {Array.from({ length: numColumns }, (_, index) => (
-          <View key={index} style={styles.column}>
-            {windowWidth >= 768 ? ( // Render different content for larger screens
-            <Pie />
-
-            // *********************************************************************** MOBILE VIEW *********************************************************************** 
-            ) : ( 
-              <>
-              <View styles={styles.grid}>
+        {windowWidth >= 768 ? (
+          <>
+            {Array.from({ length: 2 }, (_, index) => (
+              <View key={index} style={styles.column}>
                 <Pie />
-                <Text>{productData}</Text>
               </View>
-            </>
-            )}
-          </View>
-        ))}
+            ))}
+          </>
+        ) : (
+          <ScrollView>
+            <View style={styles.column}>
+              <View style={[styles.box, styles.salesBox]}>
+                <Text style={styles.h1Text}>{productData}</Text>
+                <Text style={styles.h2Text}>SALES</Text>
+                <View style={styles.sideBySide}>
+                  <View style={styles.box}>
+                    <Text style={styles.h1Text}>{productData}</Text>
+                    <Text style={styles.h2Text}>CATEGORIES</Text>
+                  </View>
+                  <View style={styles.box}>
+                    <Text style={styles.h1Text}>{productData}</Text>
+                    <Text style={styles.h2Text}>PRODUCTS</Text>
+                  </View>
+                </View>
+              </View>
+              <Pie />
+            </View>
+          </ScrollView>
+        )}
       </View>
-    // </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     flexDirection: 'row',
-    flexWrap: 'wrap', // Wrap items to the next row if there is not enough space
-    justifyContent: 'center',
-    padding: 10,
+    flexWrap: 'wrap',
   },
   column: {
     flex: 1,
     minWidth: '40%', // Minimum width for each column to ensure responsiveness
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    margin: 5,
-    padding: 10,
   },
-  // safeArea: {
-  //   flex: 1,
-  // },
+  box: {
+    backgroundColor: '#27374D',
+    padding: 10,
+    borderRadius: 10,
+    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  salesBox: {
+    flex: 1,
+    width: '100%',
+    height: 400,
+  },
+  h1Text: {
+    fontSize: 80,
+    color: '#DDE6ED',
+    fontWeight: 'bold',
+  },
+  h2Text: {
+    fontSize: 20,
+    color: '#DDE6ED',
+  },
+  sideBySide: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 20,
+  },
 });
