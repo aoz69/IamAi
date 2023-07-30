@@ -46,14 +46,15 @@ exports.insertProducts = async (req,res) =>{
             status: req.body.status,
             category: req.body.category,
         });
+        const saveProduct = await products.save();
         res.json({success: "saved"});
         console.log("success");
         // dbcon.disconnect();
         
     } catch (error) {
-        res.json({error: "error saving products to dabatase"} +error );
+        res.json({error: "error saving products to dabatase"} + error );
         console.log("error " + error);
-        dbcon.disconnect();
+        // dbcon.disconnect();
     }
 }
 

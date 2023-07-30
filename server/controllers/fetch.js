@@ -37,9 +37,10 @@ exports.fetchProduct = async (req, res) => {
     dbcon.connect();
     const product = await dbModel.productModel
     .find({})
-    .populate();
-    res.json({ "all product data": product });
-    dbcon.disconnect();
+    const count = product.length
+    // .populate();
+    res.json({ "productData": count });
+    // dbcon.disconnect();
 };
 
 

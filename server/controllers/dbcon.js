@@ -10,6 +10,7 @@ exports.connect = async (req, res) => {
 
   } catch (error) {
     res.json({error: "error connecting to database"});
+    
     console.log("Db Error! "  + error);
     
   }
