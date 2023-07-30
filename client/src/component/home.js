@@ -1,7 +1,7 @@
 import { StyleSheet, Text,View,ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import PieChart from 'react-native-pie-chart'
-import Nav from '../component/nav'
+// import Nav from '../component/nav'
 
 export default class TestChart extends Component {
   render() {
@@ -16,7 +16,7 @@ export default class TestChart extends Component {
     return (
         <>
         <View>
-          <Nav />
+          {/* <Nav /> */}
         </View>
         <View style={styles.container}>
           <ScrollView contentContainerStyle={styles.scrollContainer}>

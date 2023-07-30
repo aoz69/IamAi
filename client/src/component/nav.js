@@ -1,189 +1,65 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import logo from '../images/logo.jpg'; 
+import React from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import qr from "../component/qr"
+import index from "../component/index"
 
-function Nav() {
-  const [openDrawer, toggleDrawer] = useState(false);
-  const drawerRef = useRef(null);
+const logo = require('../images/logo.jpg');
 
-  useEffect(() => {
-    /* Close the drawer when the user clicks outside of it */
-    const closeDrawer = event => {
-      if (drawerRef.current && drawerRef.current.contains(event.target)) {
-        return;
-      }
+export default function LeftSideNavBar() {
+  const navigation = useNavigation();
 
-      toggleDrawer(false);
-    };
-
-    document.addEventListener("mousedown", closeDrawer);
-    return () => document.removeEventListener("mousedown", closeDrawer);
-  }, []);
+  const navLinks = [
+    { label: 'Home', screen: 'index' },
+    { label: 'About', screen: 'qr' },
+    { label: 'Product', screen: 'Product' },
+    { label: 'Category', screen: 'Category' },
+    { label: 'Profile', screen: 'Profile' },
+  ];
 
   return (
-    <Styles.Wrapper>
-      <CSSReset />
-
-      <Navbar.Wrapper>
-        <Navbar.Logo> 
-          <img src={logo} height={'50px'} />
-        </Navbar.Logo>
-
-        <HamburgerButton.Wrapper onClick={() => toggleDrawer(true)}>
-          <HamburgerButton.Lines />
-        </HamburgerButton.Wrapper>
-
-        <Navbar.Items ref={drawerRef} openDrawer={openDrawer}>
-          <Navbar.Item>Dashboard</Navbar.Item>
-          <Navbar.Item>Analysis</Navbar.Item>
-          <Navbar.Item>Category</Navbar.Item>
-          <Navbar.Item>Products</Navbar.Item>
-          <Navbar.Item>Profile</Navbar.Item>
-        </Navbar.Items>
-      </Navbar.Wrapper>
-    </Styles.Wrapper>
+    <View style={styles.container}>
+      <Image source={logo} style={styles.logo} />
+      {navLinks.map((link, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.linkContainer}
+          onPress={() => navigation.navigate(link.screen)}
+        >
+          <Image source={logo} style={styles.linkLogo} />
+          <Text style={styles.linkText}>{link.label}</Text>
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 }
 
-const Styles = {
-  Wrapper: styled.main`
-    display: flex;
-    background-color: #eeeeee;
-  `
-};
-
-const Navbar = {
-  Wrapper: styled.nav`
-    flex: 1;
-
-    align-self: flex-start;
-
-    padding: 1rem 3rem;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: white;
-
-    @media only screen and (max-width: 40em) {
-      position: fixed;
-      width: 100vw;
-      bottom: 0;
-    }
-  `,
-  Logo: styled.h1`
-    padding: 0.5rem 1rem;
-  `,
-  Items: styled.ul`
-    display: flex;
-    list-style: none;
-
-    @media only screen and (max-width: 40em) {
-      position: fixed;
-      right: 0;
-      top: 0;
-
-      height: 100%;
-
-      flex-direction: column;
-
-      background-color: white;
-      padding: 1rem 2rem;
-
-      transition: 0.2s ease-out;
-
-      transform: ${({ openDrawer }) =>
-        openDrawer ? `translateX(0)` : `translateX(100%)`};
-    }
-  `,
-  Item: styled.li`
-    padding: 0 1rem;
-    cursor: pointer;
-
-    @media only screen and (max-width: 40em) {
-      padding: 1rem 0;
-    }
-  `
-};
-
-const HamburgerButton = {
-  Wrapper: styled.button`
-    height: 3rem;
-    width: 3rem;
-    position: relative;
-    font-size: 12px;
-
-    display: none;
-
-    @media only screen and (max-width: 40em) {
-      display: block;
-    }
-
-    /* Remove default button styles */
-    border: none;
-    background: transparent;
-    outline: none;
-
-    cursor: pointer;
-
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      height: 150%;
-      width: 150%;
-      top: -25%;
-      left: -25%;
-    }
-  `,
-  Lines: styled.div`
-    top: 50%;
-    margin-top: -0.125em;
-
-    &,
-    &:after,
-    &:before {
-      /* Create lines */
-      height: 2px;
-      pointer-events: none;
-      display: block;
-      content: "";
-      width: 100%;
-      background-color: black;
-      position: absolute;
-    }
-
-    &:after {
-      /* Move bottom line below center line */
-      top: -0.8rem;
-    }
-
-    &:before {
-      /* Move top line on top of center line */
-      top: 0.8rem;
-    }
-  `
-};
-
-const CSSReset = createGlobalStyle`
-  *,
-  *::before, 
-  *::after {
-    margin: 0; 
-    padding: 0;
-    box-sizing: inherit;
-  }
-
-  html {
-    font-size: 62.5%; 
-    box-sizing: border-box;      
-  }  
-
-  body {
-    font-size: 1.4rem;
-    font-family: sans-serif;
-  }
-`;
-
-export default Nav;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#DDE6ED',
+    paddingTop: 20,
+    paddingHorizontal: 10,
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    marginBottom: 20,
+  },
+  linkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  linkLogo: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+    resizeMode: 'contain',
+  },
+  linkText: {
+    fontSize: 16,
+    color: '#333',
+  },
+});

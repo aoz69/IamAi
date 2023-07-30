@@ -13,11 +13,19 @@ class pie extends Component{
         const series = [item1, item2, item3,item4 ,item5 ]
         const sliceColor = ['#ef9b20', '#edbf33', '#bdcf32', '#ede15b', '#edf15b']
         return (
+          <>
             <View style={styles.container}>
                 <View style={styles.innerContainer}>
                     <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColor} />
                 </View>
             </View>
+            <View style={styles.container}>
+            <View style={styles.innerContainer}>
+                <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColor} />
+            </View>
+        </View>
+        
+        </>
         );
     }
 }
