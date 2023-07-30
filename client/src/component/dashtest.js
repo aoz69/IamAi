@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/core';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Nav from '../component/nav';
 import Pie from '../component/pie';
 
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
   const [productData, setProductData] = useState([]);
-
+  
   useEffect(() => {
     fetch('http://192.168.1.69:3000/fetchProductNumb')
       .then(res => {
@@ -38,7 +36,7 @@ export default function Dash() {
             ))}
           </>
         ) : (
-          <ScrollView>
+          <ScrollView style={{height:'100%'}}>
             <View style={styles.column}>
               <View style={[styles.box, styles.salesBox]}>
                 <Text style={styles.h1Text}>{productData}</Text>
@@ -78,7 +76,6 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: '#27374D',
     padding: 10,
-    borderRadius: 10,
     margin: 10,
     justifyContent: 'center',
     alignItems: 'center',

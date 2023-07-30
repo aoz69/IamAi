@@ -10,6 +10,8 @@ const prod = require('../images/prod.png');
 const cat = require('../images/cat.png');
 const pro = require('../images/pro.png');
 const qrr = require('../images/qr.png');
+const logout = require('../images/logOut.png');
+
 
 export default function LeftSideNavBar() {
   const navigation = useNavigation();
@@ -21,6 +23,8 @@ export default function LeftSideNavBar() {
     { label: 'Category', screen: 'Category', img: cat },
     { label: 'QR', screen: 'Profile', img: qrr },
     { label: 'Profile', screen: 'Profile', img: pro },
+    { label: 'Logout', screen: 'Profile', img: logout },
+
   ];
 
   return (
