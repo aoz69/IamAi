@@ -57,7 +57,7 @@ const productModel = new mongoose.Schema({
 const categoryModel = new mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
     }
 });
 

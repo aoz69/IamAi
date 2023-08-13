@@ -2,27 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, useWindowDimensions, ScrollView } from 'react-native';
 import Nav from '../component/nav';
 import Pie from '../component/pie';
+import useFetchData  from './fetchTest'
+
 
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
-  const [productData, setProductData] = useState([]);
-  
-  useEffect(() => {
-    fetch('http://192.168.1.69:3000/fetchProductNumb')
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      })
-      .then(data => {
-        setProductData(data.productData);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+
+  const p = useFetchData('http://192.168.1.76:3000/fetchProductNumb');
+  const c = useFetchData('http://192.168.1.76:3000/fetchCateNumb');
+  const r = useFetchData('http://192.168.1.76:3000/rev');
+
+
 
   return (
       <View style={styles.container}>
@@ -39,15 +29,15 @@ export default function Dash() {
           <ScrollView style={{height:'100%'}}>
             <View style={styles.column}>
               <View style={[styles.box, styles.salesBox]}>
-                <Text style={styles.h1Text}>{productData}</Text>
-                <Text style={styles.h2Text}>SALES</Text>
+                <Text style={styles.h1Text}>${r.TotalRev}</Text>
+                <Text style={styles.h2Text}>REVENUE</Text>
                 <View style={styles.sideBySide}>
                   <View style={styles.box}>
-                    <Text style={styles.h1Text}>{productData}</Text>
+                    <Text style={styles.h1Text}>{c.categoryData}</Text>
                     <Text style={styles.h2Text}>CATEGORIES</Text>
                   </View>
-                  <View style={styles.box}>
-                    <Text style={styles.h1Text}>{productData}</Text>
+                  <View style={styles.box}> 
+                    <Text style={styles.h1Text}>{p.productData}</Text>
                     <Text style={styles.h2Text}>PRODUCTS</Text>
                   </View>
                 </View>

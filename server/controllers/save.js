@@ -48,7 +48,6 @@ exports.insertProducts = async (req,res) =>{
         });
         const saveProduct = await products.save();
         res.json({success: "saved"});
-        console.log("success");
         // dbcon.disconnect();
         
     } catch (error) {
@@ -59,20 +58,20 @@ exports.insertProducts = async (req,res) =>{
 }
 
 exports.insertCategory = async (req, res) => {
+    dbcon.connect();
     try {
-      const name = req.body.name;
+    //   const name = req.body.name;
   
-      if (!name) {
-        return res.status(400).json({ error: "Name field is required" });
-      }
+    //   if (!name) {
+    //     return res.status(400).json({ error: "Name field is required" });
+    //   }
   
       const category = new dbModel.categoryModel({
-        name: name
+        name: req.body.name,
       });
   
       const saveCategory = await category.save();
       res.json({ success: "Category saved successfully" });
-      console.log("Category saved successfully");
     } catch (error) {
       res.status(500).json({ error: "Error saving category to the database", details: error });
     }

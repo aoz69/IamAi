@@ -11,9 +11,14 @@ router.get("/", index.index);
 
 dbcon.connect();
 router.get('/admin', admin.adminPage);
-router.post('/categoryModel', save.insertCategory);
+router.get('/fetchCateNumb', fetch.fetchCategory);
 router.get('/fetchProductNumb', fetch.fetchProduct);
 router.post('/productModel', save.insertProducts);
+router.post('/CateModel', save.insertCategory);
+router.get('/rev', fetch.fetchRev);
+router.get('/stockCount', fetch.fetchStockCount);
+
+
 
  
 module.exports = router;

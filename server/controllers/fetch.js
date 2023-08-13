@@ -16,50 +16,60 @@ exports.fetchUsers = async (req, res) => {
 exports.fetchUsersName = async (req, res) => {
     dbcon.connect();
     if (req.session.userName) {
-        return res.json({ id: req.session.userId, userName: req.session.userName, role:req.session.userRole});
+        return res.json({ id: req.session.userId, userName: req.session.userName, role: req.session.userRole });
     } else {
         return res.json({ error: "Not Logged In" });
     }
-   
+
 };
 
 
 exports.fetchCategory = async (req, res) => {
-    dbcon.connect();
-    const categories = await dbModel.categoryModel
-    .find({})
-    .populate();
-    res.json({ "all category data": categories });
-    dbcon.disconnect();
+    const categories = await dbModel.categoryModel.find({});
+    const count = categories.length;
+    res.json({ "categoryData": count });
 };
 
 exports.fetchProduct = async (req, res) => {
-    dbcon.connect();
-    const product = await dbModel.productModel
-    .find({})
+    const product = await dbModel.productModel.find({});
     const count = product.length
-    // .populate();
-    res.json({ "productData": count });
-    // dbcon.disconnect();
+    res.json({ "productData": count });;
 };
 
 
-exports.fetchProductByCategory = async(req,res,category) =>{
+exports.fetchProductByCategory = async (req, res, category) => {
     dbcon.connect();
     const products = await dbModel.productModel
-    .find({catrory : {category}})
-    .populate();
-    res.json({ "Products under  + {category}": products });
+        .find({ catrory: { category } })
+        .populate();
+    res.json({ "productsOfCatagegoy": products });
     dbcon.disconnect();
 }
 
 exports.fetchBarCode = async (req, res) => {
     dbcon.connect();
     const product = await dbModel.productModel
-    .find({} , "barcodeId")
-    .populate();
+        .find({}, "barcodeId")
+        .populate();
     res.json({ "all product data": product });
-    dbcon.disconnect();
 };
 
 
+exports.fetchRev = async (req, res) => {
+    dbcon.connect();
+    const products = await dbModel.productModel.find({}, 'price');
+    const totalPrice = products.reduce((sum, product) => {
+        return sum + parseFloat(product.price);
+    }, 0);
+    res.json({ "TotalRev": totalPrice });
+};
+
+
+exports.fetchStockCount = async (req, res) => {
+    dbcon.connect();
+    const products = await dbModel.productModel.find({}, 'stock_Count');
+    const stock = products.reduce((sum, product) => {
+        return sum + parseFloat(product.stock_Count);
+    }, 0);
+    res.json({ "totalStock": stock });
+};

@@ -18,9 +18,5 @@ exports.connect = async (req, res) => {
 };
 
 exports.disconnect = function(){
-  mongoose.connection.close(
-    function(){
-        console.log("connection to database has been closed");
-    }
-);
+  mongoose.connection.close();
 } 
