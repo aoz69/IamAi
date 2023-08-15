@@ -1,41 +1,71 @@
 import { StyleSheet, View, Text } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import React, { Component } from 'react';
+import useFetchData  from './fetchTest'
 
-class PieComponent extends Component {
-  render() {
-    const item1 = 10;
-    const item2 = 10;
-    const item3 = 50;
-    const item4 = 5;
-    const item5 = 25;
+
+const PieComponent = () => {
+  const lowStock = useFetchData('http://192.168.1.76:3000/lowstockCount');
+  const archivedStock = useFetchData('http://192.168.1.76:3000/archivedCount');
+  const inStock = useFetchData('http://192.168.1.76:3000/inStockCount');
+  const soldStock = useFetchData('http://192.168.1.76:3000/soldCount');
+
+  
+  if (!lowStock | !archivedStock | !inStock | !soldStock ) {
+    return <Text>Fetching Products is taking longer than usual</Text>;
+  }
+
+  // const stockCountsArray = products.stock.map(item => item.status);
+  // const widthAndHeight = 200;
+  // const series = stockCountsArray; 
+  // const sliceColorData = [
+  //   { color: '#ef9b20', name: stockCountsArray[0], value: 5},
+  //   { color: '#edbf33', name: stockCountsArray[1], value:  20},
+  //   { color: '#bdcf32', name: stockCountsArray[2], value:  10},
+  //   { color: '#bddf32', name: stockCountsArray[2], value:  10},
+
+  const total = lowStock.lowstock + archivedStock.stock +  inStock.lowstock + soldStock.soldStock
+  const lo = (lowStock.lowstock/total) * 100
+  const ar = (archivedStock.stock/total) * 100
+  const is = (inStock.lowstock/total) * 100
+  const ss = (soldStock.soldStock/total) * 100
+
+
+    const lowStocks = lo;
+    const archivedStocks = ar;
+    const inStocks = is;
+    const soldStocks = ss;
     const widthAndHeight = 200;
-    const series = [item1, item2, item3, item4, item5];
+    const series = [lowStocks, archivedStocks, inStocks, soldStocks];
     const sliceColorData = [
-      { color: '#ef9b20', name: 'Sales', value: item1 },
-      { color: '#edbf33', name: 'Apple', value: item2 },
-      { color: '#bdcf32', name: 'Money', value: item3 },
-      { color: '#ede15b', name: 'Fire', value: item4 },
-      { color: '#edf15b', name: 'Dog', value: item5 },
+      { color: '#ef9b20', name: 'Low stock', value: lowStocks },
+      { color: '#edbf33', name: 'Archived', value: archivedStocks },
+      { color: '#bdcf32', name: 'In stock', value: inStocks },
+      { color: '#ede15b', name: 'Sold', value: soldStocks },
     ];
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.pieContainer}>
-          <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColorData.map(item => item.color)} />
-        </View>
-        <View style={styles.colorDetailsContainer}>
-          {sliceColorData.map((item, index) => (
-            <View key={index} style={styles.colorDetailItem}>
-              <View style={[styles.colorSquare, { backgroundColor: item.color }]} />
-              <Text style={styles.colorText}>{item.name} {item.value}%</Text>
-            </View>
-          ))}
-        </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.pieContainer}>
+        {/* <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColorData.map(item => item.color)} /> */}
+        <PieChart
+                widthAndHeight={widthAndHeight}
+                series={series}
+                sliceColor={sliceColorData.map(item => item.color)}
+                coverRadius={.5}
+              />
       </View>
-    );
-  }
-}
+      <View style={styles.colorDetailsContainer}>
+        {sliceColorData.map((item, index) => (
+          <View key={index} style={styles.colorDetailItem}>
+            <View style={[styles.colorSquare, { backgroundColor: item.color }]} />
+            <Text style={styles.colorText}>{item.name} {item.value}%</Text>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+};
 
 export default PieComponent;
 

@@ -22,7 +22,7 @@ export default function LeftSideNavBar() {
     { label: 'Product', screen: 'qr', img: prod },
     { label: 'Category', screen: 'Category', img: cat },
     { label: 'QR', screen: 'Profile', img: qrr },
-    { label: 'Profile', screen: 'Profile', img: pro },
+    { label: 'Profile', screen: 'Login', img: pro },
     { label: 'Logout', screen: 'Profile', img: logout },
 
   ];

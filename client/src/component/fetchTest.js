@@ -18,6 +18,7 @@ export default function useFetchData(url) {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        return res.json({"Error" : "Network response was not ok"})
       });
   }, [url]);
 

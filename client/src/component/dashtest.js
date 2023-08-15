@@ -13,7 +13,6 @@ export default function Dash() {
   const r = useFetchData('http://192.168.1.76:3000/rev');
 
 
-
   return (
       <View style={styles.container}>
         <Nav />

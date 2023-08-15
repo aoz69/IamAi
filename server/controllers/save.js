@@ -3,37 +3,38 @@ const hashing  = require('bcrypt');
 const session = require('express-session');
 const dbcon = require('./dbcon');
 
-exports.insertUsers = async (req,res) =>{
+exports.insertUsers = async (req, res) => {
+    dbcon.connect();
+    let hashedPass;
     try {
-        const pass = await hashing.genSalt(10);
-        const hashedPass = await hashing.hash(req.body,password , pass);
+      let pass = await hashing.genSalt(10);
+      hashedPass = await hashing.hash(req.body.password, pass);
     } catch (error) {
-        console.log("error " + error);
-        return res.json({error : "error occured while hashing password"});
+      console.log("error " + error);
+      return res.json({ error: "error occurred while hashing password" });
     }
     dbcon.connect();
-    const user = new dbModel.userModel({
-        name: req.body.name,
-        role: req.body.role,
-        password: hashedPass
+    let user = new dbModel.userModel({
+      name: req.body.name,
+      role: req.body.role,
+      password: hashedPass,
     });
-
+  
     try {
-        const saveUser = await user.save();
-        session = req.session;
-        session.userName = req.body.f_name + " " + req.body.l_name;
-        session._id = user._id;
-        res.json({success: "saved"});
-        console.log("success");
-        dbcon.disconnect();
-
-
+      let saveUser = await user.save();
+      let session = req.session;
+    //   session.userName = req.body.f_name + " " + req.body.l_name;
+    //   session._id = user._id;
+      res.json({ success: "saved" });
+      console.log("success");
+      dbcon.disconnect();
     } catch (error) {
-        res.json({error: "error saving user to dabatase"});
-        console.log("error " + error);
-        dbcon.disconnect();
+      res.json({ error: "error saving user to database" });
+      console.log("error " + error);
+      dbcon.disconnect();
     }
-}
+  };
+  
 
 exports.insertProducts = async (req,res) =>{
     dbcon.connect();
