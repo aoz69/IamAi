@@ -1,100 +1,61 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const LoginScreen = () => {
-  const [role, setRole] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.1.76:3000/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          role: role,
-          password: password,
-        }),
-      });
+      const response = await fetch('http://192.168.1.76:3000/user');
+      const data = await response.json();
+      const userData = data.data[0];
 
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log('Login successful:', responseData);
+      let pass = await hashing.genSalt(10);
+      const hashedPass = await hashing.hash(userData.password, pass);
 
-        // Do something with responseData, like storing in context or AsyncStorage
+      if (userData.role === 'user' && hashedPassword === password) {
+        // Successful login logic
+        console.log('Login successful');
       } else {
-        const errorData = await response.json();
-        console.error('Login failed:', errorData);
+        setError('Invalid credentials');
       }
-
     } catch (error) {
-      console.error('Login failed:', error.message);
+      console.error('Error fetching data:', error);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text>Login</Text>
       <TextInput
-        style={styles.input}
-        placeholder="Role"
-        onChangeText={text => setRole(text)}
-        value={role}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
       />
       <TextInput
-        style={styles.input}
         placeholder="Password"
         secureTextEntry
-        onChangeText={text => setPassword(text)}
         value={password}
+        onChangeText={setPassword}
       />
-      <TouchableOpacity style={styles.forgotPasswordLink}>
-        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
+      <Button title="Login" onPress={handleLogin} />
+      {error !== '' && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    width: '80%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  forgotPasswordLink: {
+  errorText: {
+    color: 'red',
     marginTop: 10,
   },
-  forgotPasswordText: {
-    color: 'blue',
-  },
-  loginButton: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  loginButtonText: {
-    color: 'white',
-    textAlign: 'center',
-  },
-};
+});
 
 export default LoginScreen;

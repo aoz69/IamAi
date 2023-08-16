@@ -36,7 +36,7 @@ exports.checkUser = async (req, res) => {
       res.json({ error: "Server error, try again" });
     }
   };
-  
+    
   exports.logout = (req, res) => {
     req.session.destroy((err) => {
       if (err) {

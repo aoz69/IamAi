@@ -4,6 +4,7 @@ const dbcon = require('./dbcon');
 
 
 exports.fetchUsers = async (req, res) => {
+    dbcon.connect();
     try {
         dbcon.connect();
         const users = await dbModel.userModel
