@@ -15,6 +15,6 @@ app.use(
   })
 );
 app.use(home);
-app.listen(port, '192.168.1.76', () => {
-  console.log(`Server is running at http://192.168.1.76:${port}`);
+app.listen(port, '192.168.1.75', () => {
+  console.log(`Server is running at http://192.168.1.75:${port}`);
 });

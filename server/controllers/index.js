@@ -1,8 +1,12 @@
+const dbcon = require('./dbcon');
+const model = require('../models/dbModel');
+const bcrypt  = require('bcrypt');
 
 exports.index = (req,res)=>{
     console.log("this is home");
     res.json({message: "hello this is homepage"});
 }
+
 
 exports.checkUser = async (req, res) => {
     console.log(req.body);
@@ -10,41 +14,41 @@ exports.checkUser = async (req, res) => {
     const password = req.body.password;
     const adminLogin = req.query.adminLogin || false;
     try {
-      if (!(await dbcon.connect())) {
-        throw "err";
-      }
       const user = await model.userModel.findOne({ email }).exec();
-      console.log(user);
-      if (!user || (!user.admin && adminLogin)) {
-        return res.json({ status: "error", error: "invalid user email" });
-      } else if (!(await bcrypt.compare(password, user.password))) {
-        return res.json({ status: "error", error: "Password is invalid" });
-      } else {
-        req.session.userName = user.f_name + " " + user.l_name;
-        req.session.userId = user._id;
-        req.session.email = user.email;
-        req.session.admin = user.admin;
-        return res.json({
-          status: "success",
-          username: req.session.userName,
-          id: req.session.userId,
-        });
+  
+      if (!user) {
+        console.log("Wrong Email");
+        return res.json({ status: "error", error: "no user with that email is registered" });
       }
-      // console.log(session.userName);
+  
+      bcrypt.compare(password, user.password)
+        .then(isMatch => {
+          if (isMatch) {
+            console.log(user.password + " this is body pass: " + password);
+            // console.log('login Success');
+            return res.json({ status: "success", message: "Login successful" });
+          } else {
+            // console.log("Incorrect Password");
+            return res.json({ status: "error", error: "Invalid password" });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          res.json({ status: "error", error: "Server error, try again" });
+        });
     } catch (error) {
       console.log(error);
-      res.json({ error: "Server error, try again" });
+      res.json({ status: "error", error: "Server error, try again" });
     }
   };
-    
-  exports.logout = (req, res) => {
-    req.session.destroy((err) => {
+
+exports.logout = (req, res) => {
+  req.session.destroy((err) => {
       if (err) {
-        //good
-        res.json({ success: false });
+          res.json({ success: false });
       } else {
-        res.json({ success: true });
+          res.json({ success: true });
       }
-    });
-    res.clearCookie("token");
-  };
+  });
+  res.clearCookie("token");
+};

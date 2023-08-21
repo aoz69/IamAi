@@ -25,6 +25,7 @@ router.get('/soldCount', fetch.soldCount);
 
 router.get('/user', fetch.fetchUsers);
 router.post('/addUser', save.insertUsers);
+router.post('/checkUser' , index.checkUser)
 
 
 

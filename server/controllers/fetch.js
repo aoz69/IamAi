@@ -4,17 +4,15 @@ const dbcon = require('./dbcon');
 
 
 exports.fetchUsers = async (req, res) => {
-    dbcon.connect();
     try {
-        dbcon.connect();
-        const users = await dbModel.userModel
+            const users = await dbModel.userModel
             .find({}, 'role password')
             // .populate(); // You might uncomment this if it's necessary
 
         // Assuming `users` is an array of objects with `role` and `password` fields
         res.json({ "data": users });
         
-        dbcon.disconnect();
+        
     } catch (error) {
         console.error("Error fetching users:", error);
         res.status(500).json({ error: "An error occurred while fetching users." });
@@ -44,16 +42,14 @@ exports.fetchProductNumb = async (req, res) => {
 };
 
 exports.fetchProductByCategory = async (req, res, category) => {
-    dbcon.connect();
     const products = await dbModel.productModel
         .find({ catrory: { category } })
         .populate();
     res.json({ "productsOfCtagegoy": products });
-    dbcon.disconnect();
+    
 };
 
 exports.fetchBarCode = async (req, res) => {
-    dbcon.connect();
     const product = await dbModel.productModel
         .find({}, "barcodeId")
         .populate();
@@ -62,7 +58,6 @@ exports.fetchBarCode = async (req, res) => {
 
 
 exports.fetchRev = async (req, res) => {
-    dbcon.connect();
     const products = await dbModel.productModel.find({}, 'price');
     const totalPrice = products.reduce((sum, product) => {
         return sum + parseFloat(product.price);
@@ -72,7 +67,6 @@ exports.fetchRev = async (req, res) => {
 
 
 exports.fetchStockCount = async (req, res) => {
-    dbcon.connect();
     const products = await dbModel.productModel.find({}, 'stock_Count');
     const stock = products.reduce((sum, product) => {
         return sum + parseFloat(product.stock_Count);
@@ -81,7 +75,6 @@ exports.fetchStockCount = async (req, res) => {
 };
 
 exports.fetchProductStock = async (req, res) => {
-    dbcon.connect();
     const stockCnt = await dbModel.productModel
         .find({})
     res.json({ "stock": stockCnt });
@@ -89,25 +82,21 @@ exports.fetchProductStock = async (req, res) => {
 
 
 exports.lowstockCount = async (req, res) => {
-    dbcon.connect();
     const activeCount = await dbModel.productModel.countDocuments({ status: 'lowstock' });;
     res.json({ "lowstock": activeCount });
 };
 
 exports.archivedCount = async (req, res) => {
-    dbcon.connect();
     const activeCount = await dbModel.productModel.countDocuments({ status: 'archived' });;
     res.json({ "archived": activeCount });
 };
 
 exports.inStockCount = async (req, res) => {
-    dbcon.connect();
     const inStock = await dbModel.productModel.countDocuments({ status: 'inStock' });;
     res.json({ "stock": inStock });
 };
 
 exports.soldCount = async (req, res) => {
-    dbcon.connect();
     const activeCount = await dbModel.productModel.countDocuments({ status: 'sold' });;
     res.json({ "soldStock": activeCount });
 };

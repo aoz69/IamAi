@@ -5,10 +5,10 @@ import useFetchData  from './fetchTest'
 
 
 const PieComponent = () => {
-  const lowStock = useFetchData('http://192.168.1.76:3000/lowstockCount');
-  const archivedStock = useFetchData('http://192.168.1.76:3000/archivedCount');
-  const inStock = useFetchData('http://192.168.1.76:3000/inStockCount');
-  const soldStock = useFetchData('http://192.168.1.76:3000/soldCount');
+  const lowStock = useFetchData('http://192.168.1.75:3000/lowstockCount');
+  const archivedStock = useFetchData('http://192.168.1.75:3000/archivedCount');
+  const inStock = useFetchData('http://192.168.1.75:3000/inStockCount');
+  const soldStock = useFetchData('http://192.168.1.75:3000/soldCount');
 
   
   if (!lowStock | !archivedStock | !inStock | !soldStock ) {

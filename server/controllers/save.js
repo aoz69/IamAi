@@ -4,7 +4,7 @@ const session = require('express-session');
 const dbcon = require('./dbcon');
 
 exports.insertUsers = async (req, res) => {
-    dbcon.connect();
+    
     let hashedPass;
     try {
       let pass = await hashing.genSalt(10);
@@ -13,11 +13,12 @@ exports.insertUsers = async (req, res) => {
       console.log("error " + error);
       return res.json({ error: "error occurred while hashing password" });
     }
-    dbcon.connect();
+    
     let user = new dbModel.userModel({
       name: req.body.name,
       role: req.body.role,
       password: hashedPass,
+      email: req.body.email,
     });
   
     try {
@@ -27,17 +28,17 @@ exports.insertUsers = async (req, res) => {
     //   session._id = user._id;
       res.json({ success: "saved" });
       console.log("success");
-      dbcon.disconnect();
+      
     } catch (error) {
       res.json({ error: "error saving user to database" });
       console.log("error " + error);
-      dbcon.disconnect();
+      
     }
   };
   
 
 exports.insertProducts = async (req,res) =>{
-    dbcon.connect();
+    
     try {
         const products = new dbModel.productModel({
             name: req.body.name,
@@ -49,17 +50,17 @@ exports.insertProducts = async (req,res) =>{
         });
         const saveProduct = await products.save();
         res.json({success: "saved"});
-        // dbcon.disconnect();
+        // 
         
     } catch (error) {
         res.json({error: "error saving products to dabatase"} + error );
         console.log("error " + error);
-        // dbcon.disconnect();
+        // 
     }
 }
 
 exports.insertCategory = async (req, res) => {
-    dbcon.connect();
+    
     try {
     //   const name = req.body.name;
   

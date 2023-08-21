@@ -1,61 +1,76 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const LoginScreen = () => {
-  const [username, setUsername] = useState('');
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.1.76:3000/user');
-      const data = await response.json();
-      const userData = data.data[0];
+      const response = await fetch('http://192.168.1.75:3000/checkUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      let pass = await hashing.genSalt(10);
-      const hashedPass = await hashing.hash(userData.password, pass);
-
-      if (userData.role === 'user' && hashedPassword === password) {
-        // Successful login logic
-        console.log('Login successful');
+      if (response.ok) {
+        const responseBody = await response.json();
+        if (responseBody.status === 'success') {
+          console.log('User authenticated');
+        } else {
+          console.log('Authentication failed');
+        }
       } else {
-        setError('Invalid credentials');
+        console.log('Request failed');
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error:', error);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
+      <Text style={styles.heading}>Login Form</Text>
       <TextInput
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        style={styles.input}
+        placeholder="Email"
+        onChangeText={text => setEmail(text)}
+        value={email}
       />
       <TextInput
+        style={styles.input}
         placeholder="Password"
-        secureTextEntry
+        onChangeText={text => setPassword(text)}
         value={password}
-        onChangeText={setPassword}
+        secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
-      {error !== '' && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
-  errorText: {
-    color: 'red',
-    marginTop: 10,
+  heading: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
 });
 
-export default LoginScreen;
+export default LoginForm;

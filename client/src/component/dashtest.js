@@ -8,9 +8,9 @@ import useFetchData  from './fetchTest'
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
 
-  const p = useFetchData('http://192.168.1.76:3000/fetchProductNumb');
-  const c = useFetchData('http://192.168.1.76:3000/fetchCateNumb');
-  const r = useFetchData('http://192.168.1.76:3000/rev');
+  const p = useFetchData('http://192.168.1.75:3000/fetchProductNumb');
+  const c = useFetchData('http://192.168.1.75:3000/fetchCateNumb');
+  const r = useFetchData('http://192.168.1.75:3000/rev');
 
 
   return (
