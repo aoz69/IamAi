@@ -6,6 +6,7 @@ const port = 3000;
 const home = require("./routes/routes");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
+const ip = "192.168.1.77";
 // const cookieParser = require("cookie-parser");
 
 app.use(express.json()); //this is the build in express body-parser
@@ -23,6 +24,6 @@ app.use(session({
   saveUninitialized: true,
 }));
 app.use(home);
-app.listen(port, '192.168.1.77', () => {
-  console.log(`Server is running at http://192.168.1.77:${port}`);
+app.listen(port, ip, () => {
+  console.log(`Server is running at http://${ip}:${port}`);
 });
