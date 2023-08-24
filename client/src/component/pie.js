@@ -2,13 +2,15 @@ import { StyleSheet, View, Text } from 'react-native';
 import PieChart from 'react-native-pie-chart';
 import React, { Component } from 'react';
 import useFetchData  from './fetchTest'
-
+import vars from '../public/vars';
 
 const PieComponent = () => {
-  const lowStock = useFetchData('http://192.168.1.77:3000/lowstockCount');
-  const archivedStock = useFetchData('http://192.168.1.77:3000/archivedCount');
-  const inStock = useFetchData('http://192.168.1.77:3000/inStockCount');
-  const soldStock = useFetchData('http://192.168.1.77:3000/soldCount');
+  const ip = vars();
+
+  const lowStock = useFetchData(ip +'lowstockCount');
+  const archivedStock = useFetchData(ip +'archivedCount');
+  const inStock = useFetchData(ip +'inStockCount');
+  const soldStock = useFetchData(ip +'soldCount');
 
   
   if (!lowStock | !archivedStock | !inStock | !soldStock ) {

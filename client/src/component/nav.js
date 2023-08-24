@@ -4,13 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import qr from "../component/qr"
 import index from "../component/index"
 
-const logo = require('../images/logo.jpg');
-const home = require('../images/home.png');
-const prod = require('../images/prod.png');
-const cat = require('../images/cat.png');
-const pro = require('../images/pro.png');
-const qrr = require('../images/qr.png');
-const logout = require('../images/logOut.png');
+const logo = require('../public/images/logo.jpg');
+const home = require('../public/images/home.png');
+const prod = require('../public/images/prod.png');
+const cat = require('../public/images/cat.png');
+const pro = require('../public/images/pro.png');
+const qrr = require('../public/images/qr.png');
+const logout = require('../public/images/logOut.png');
 
 
 export default function LeftSideNavBar() {

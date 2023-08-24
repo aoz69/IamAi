@@ -1,15 +1,19 @@
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import vars from '../public/vars';
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const ip = vars();
+
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.1.77:3000/checkUser', {
+      const response = await fetch(ip +'checkUser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

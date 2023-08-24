@@ -3,15 +3,16 @@ import { View, Text, Button, StyleSheet, useWindowDimensions, ScrollView } from 
 import Nav from '../component/nav';
 import Pie from '../component/pie';
 import useFetchData  from './fetchTest'
+import vars from '../public/vars'
 
 
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
-
-  const p = useFetchData('http://192.168.1.77:3000/fetchProductNumb');
-  const c = useFetchData('http://192.168.1.77:3000/fetchCateNumb');
-  const r = useFetchData('http://192.168.1.77:3000/rev');
-  const sessionData = useFetchData('http://192.168.1.77:3000/getSession');
+  const ip = vars();
+  const p = useFetchData(ip +'fetchProductNumb');
+  const c = useFetchData(ip +'fetchCateNumb');
+  const r = useFetchData(ip +'rev');
+  const sessionData = useFetchData(ip +'getSession');
 
 
 
