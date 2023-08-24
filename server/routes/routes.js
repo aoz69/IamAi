@@ -13,6 +13,9 @@ dbcon.connect();
 router.get('/admin', admin.adminPage);
 router.get('/fetchCateNumb', fetch.fetchCategory);
 router.get('/fetchProductNumb', fetch.fetchProductNumb);
+
+router.get('/fetchProducts', fetch.fetchProducts);
+
 router.post('/productModel', save.insertProducts);
 router.post('/CateModel', save.insertCategory);
 router.get('/rev', fetch.fetchRev);

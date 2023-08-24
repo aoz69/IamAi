@@ -47,8 +47,16 @@ exports.fetchProductByCategory = async (req, res, category) => {
         .find({ catrory: { category } })
         .populate();
     res.json({ "productsOfCtagegoy": products });
-    
 };
+
+
+exports.fetchProducts = async (req, res, category) => {
+    const products = await dbModel.productModel
+        .find({})
+        .populate();
+    res.json({ "products": products });
+};
+
 
 exports.fetchBarCode = async (req, res) => {
     const product = await dbModel.productModel
