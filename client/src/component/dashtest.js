@@ -8,9 +8,11 @@ import useFetchData  from './fetchTest'
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
 
-  const p = useFetchData('http://192.168.1.75:3000/fetchProductNumb');
-  const c = useFetchData('http://192.168.1.75:3000/fetchCateNumb');
-  const r = useFetchData('http://192.168.1.75:3000/rev');
+  const p = useFetchData('http://192.168.1.77:3000/fetchProductNumb');
+  const c = useFetchData('http://192.168.1.77:3000/fetchCateNumb');
+  const r = useFetchData('http://192.168.1.77:3000/rev');
+  const sessionData = useFetchData('http://192.168.1.77:3000/getSession');
+
 
 
   return (
@@ -43,6 +45,9 @@ export default function Dash() {
               </View>
               <Pie />
             </View>
+            {sessionData && sessionData.status === 'success' && (
+          <Text style={styles.emailText}>Logged in as: {sessionData.user.email}</Text>
+          )}
           </ScrollView>
         )}
       </View>
@@ -87,6 +92,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
+    marginTop: 20,
+  },
+  emailText: {
+    fontSize: 18,
+    color: 'blue',
+    textAlign: 'center',
     marginTop: 20,
   },
 });

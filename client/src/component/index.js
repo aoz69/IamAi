@@ -1,13 +1,15 @@
+
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.1.75:3000/checkUser', {
+      const response = await fetch('http://192.168.1.77:3000/checkUser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -19,13 +21,17 @@ const LoginForm = () => {
         const responseBody = await response.json();
         if (responseBody.status === 'success') {
           console.log('User authenticated');
+          setErrorMsg('');
         } else {
+          setErrorMsg(responseBody.error);
           console.log('Authentication failed');
         }
       } else {
+        setErrorMsg('Request failed');
         console.log('Request failed');
       }
     } catch (error) {
+      setErrorMsg('Network error');
       console.error('Error:', error);
     }
   };
@@ -47,10 +53,10 @@ const LoginForm = () => {
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
+      {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +76,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 10,
   },
 });
 

@@ -27,6 +27,8 @@ router.get('/user', fetch.fetchUsers);
 router.post('/addUser', save.insertUsers);
 router.post('/checkUser' , index.checkUser)
 
+router.get('/getSession' , index.getSession)
+
 
 
 module.exports = router;

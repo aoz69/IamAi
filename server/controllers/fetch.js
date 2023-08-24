@@ -1,5 +1,6 @@
 const dbModel = require('../models/dbModel');
 const dbcon = require('./dbcon');
+const session = require('express-session');
 
 
 
@@ -100,3 +101,4 @@ exports.soldCount = async (req, res) => {
     const activeCount = await dbModel.productModel.countDocuments({ status: 'sold' });;
     res.json({ "soldStock": activeCount });
 };
+

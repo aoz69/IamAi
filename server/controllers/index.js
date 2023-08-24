@@ -1,4 +1,4 @@
-const dbcon = require('./dbcon');
+
 const model = require('../models/dbModel');
 const bcrypt  = require('bcrypt');
 
@@ -24,11 +24,17 @@ exports.checkUser = async (req, res) => {
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
-            console.log(user.password + " this is body pass: " + password);
-            // console.log('login Success');
+
+            const userData= {
+              _id: user.id,
+              email: user.email,
+              role: user.role
+            };
+
+            req.session.user = userData;
+            console.log( req.session.user)
             return res.json({ status: "success", message: "Login successful" });
           } else {
-            // console.log("Incorrect Password");
             return res.json({ status: "error", error: "Invalid password" });
           }
         })
@@ -42,6 +48,16 @@ exports.checkUser = async (req, res) => {
     }
   };
 
+  exports.getSession = async(req,res) =>{
+    const user = req.session.user;
+    if (user) {
+        res.json({ status: 'success', user });
+    } else {
+        res.json({ status: 'error', message: 'User data not found in session' });
+      }
+  }
+
+
 exports.logout = (req, res) => {
   req.session.destroy((err) => {
       if (err) {
@@ -52,3 +68,4 @@ exports.logout = (req, res) => {
   });
   res.clearCookie("token");
 };
+

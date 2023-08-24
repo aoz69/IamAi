@@ -5,10 +5,10 @@ import useFetchData  from './fetchTest'
 
 
 const PieComponent = () => {
-  const lowStock = useFetchData('http://192.168.1.75:3000/lowstockCount');
-  const archivedStock = useFetchData('http://192.168.1.75:3000/archivedCount');
-  const inStock = useFetchData('http://192.168.1.75:3000/inStockCount');
-  const soldStock = useFetchData('http://192.168.1.75:3000/soldCount');
+  const lowStock = useFetchData('http://192.168.1.77:3000/lowstockCount');
+  const archivedStock = useFetchData('http://192.168.1.77:3000/archivedCount');
+  const inStock = useFetchData('http://192.168.1.77:3000/inStockCount');
+  const soldStock = useFetchData('http://192.168.1.77:3000/soldCount');
 
   
   if (!lowStock | !archivedStock | !inStock | !soldStock ) {
@@ -29,25 +29,22 @@ const PieComponent = () => {
   const ar = (archivedStock.stock/total) * 100
   const is = (inStock.lowstock/total) * 100
   const ss = (soldStock.soldStock/total) * 100
-
-
-    const lowStocks = lo;
-    const archivedStocks = ar;
-    const inStocks = is;
-    const soldStocks = ss;
-    const widthAndHeight = 200;
-    const series = [lowStocks, archivedStocks, inStocks, soldStocks];
-    const sliceColorData = [
-      { color: '#ef9b20', name: 'Low stock', value: lowStocks },
-      { color: '#edbf33', name: 'Archived', value: archivedStocks },
-      { color: '#bdcf32', name: 'In stock', value: inStocks },
-      { color: '#ede15b', name: 'Sold', value: soldStocks },
-    ];
+  const lowStocks = lo;
+  const archivedStocks = ar;
+  const inStocks = is;
+  const soldStocks = ss;
+  const widthAndHeight = 200;
+  const series = [lowStocks, archivedStocks, inStocks, soldStocks];
+  const sliceColorData = [
+    { color: '#ef9b20', name: 'Low stock', value: lowStocks },
+    { color: '#edbf33', name: 'Archived', value: archivedStocks },
+    { color: '#bdcf32', name: 'In stock', value: inStocks },
+    { color: '#ede15b', name: 'Sold', value: soldStocks },
+  ];
 
   return (
     <View style={styles.container}>
       <View style={styles.pieContainer}>
-        {/* <PieChart widthAndHeight={widthAndHeight} series={series} sliceColor={sliceColorData.map(item => item.color)} /> */}
         <PieChart
                 widthAndHeight={widthAndHeight}
                 series={series}
