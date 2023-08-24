@@ -19,11 +19,11 @@ export default function LeftSideNavBar() {
 
   const navLinks = [
     { label: 'Home', screen: 'index', img: home },
-    { label: 'Product', screen: 'qr', img: prod },
+    { label: 'Product', screen: 'Product', img: prod },
     { label: 'Category', screen: 'Category', img: cat },
-    { label: 'QR', screen: 'Profile', img: qrr },
-    { label: 'Profile', screen: 'Login', img: pro },
-    { label: 'Logout', screen: 'Profile', img: logout },
+    { label: 'QR', screen: 'QR', img: qrr },
+    { label: 'Profile', screen: 'Profile', img: pro },
+    { label: 'Logout', screen: 'Logout', img: logout },
 
   ];
 

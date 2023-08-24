@@ -7,24 +7,21 @@ import Addbtn from '../component/addBtn'
 
 const PieComponent = () => {
   const ip = vars();
-  const products = useFetchData(ip + 'fetchProducts');
+  const category = useFetchData(ip + 'fetchCate');
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Product Name</Text>
-        <Text style={styles.headerText}>Price</Text>
-        <Text style={styles.headerText}>Stock Count</Text>
-        <Text style={styles.headerText}>Status</Text>
+        <Text style={styles.headerText}>Cate ID</Text>
+        <Text style={styles.headerText}>Name</Text>
       </View>
 
-      {products.products &&
-        products.products.map((product) => (
-          <View style={styles.row} key={product._id}>
-            <Text style={styles.column}>{product.name}</Text>
-            <Text style={styles.column}>{product.price}</Text>
-            <Text style={styles.column}>{product.stock_Count}</Text>
-            <Text style={styles.column}>{product.status}</Text>
+      {category.category &&
+        category.category.map((category) => (
+          <View style={styles.row} key={category._id}>
+            <Text style={styles.column}>{category._id}</Text>
+            <Text style={styles.column}>{category.name}</Text>
+
           </View>
         ))}
         <Addbtn />

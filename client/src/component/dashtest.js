@@ -5,7 +5,6 @@ import Pie from '../component/pie';
 import useFetchData  from './fetchTest'
 import vars from '../public/vars'
 
-
 export default function Dash() {
   const windowWidth = useWindowDimensions().width;
   const ip = vars();

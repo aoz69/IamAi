@@ -50,11 +50,18 @@ exports.fetchProductByCategory = async (req, res, category) => {
 };
 
 
-exports.fetchProducts = async (req, res, category) => {
+exports.fetchProducts = async (req, res) => {
     const products = await dbModel.productModel
         .find({})
         .populate();
     res.json({ "products": products });
+};
+
+exports.fetchCate = async (req, res) => {
+    const cates = await dbModel.categoryModel
+        .find({})
+        .populate();
+    res.json({ "category": cates });
 };
 
 

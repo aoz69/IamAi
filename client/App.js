@@ -5,7 +5,7 @@ import qr from './src/component/qr'
 import nav from './src/component/nav';
 import dashtest from './src/component/dashtest';
 import product from './src/component/product';
-
+import category from './src/component/category';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,9 +14,12 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="nav">
         <Stack.Screen name="Home" component={dashtest}/>
-        <Stack.Screen name="qr" component={product}/>
-        <Stack.Screen name="index" component={dashtest}/>
+        <Stack.Screen name="Product" component={product}/>
+        <Stack.Screen name="Category" component={category}/>
+        <Stack.Screen name="QR" component={qr}/>
         <Stack.Screen name="Profile" component={login}/>
+        <Stack.Screen name="Logout" component={login}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );
