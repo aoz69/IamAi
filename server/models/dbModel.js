@@ -47,7 +47,7 @@ const productModel = new mongoose.Schema({
     status:{
         type: String,
         required: true,
-        enum: ["instock", "lowstock"],
+        enum: ["instock", "lowstock", "sold" ,"archived" ],
         default: "active",
     }, 
     category:{
@@ -55,7 +55,7 @@ const productModel = new mongoose.Schema({
         ref: "category"
     },
     dateOfExpiry:{
-        type: Date,
+        type: String,
     }
 });
 

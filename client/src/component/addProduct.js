@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Picker } from 'react-native';
+import useFetchData from './fetchTest';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import vars from "../public/vars";
 
@@ -10,31 +13,34 @@ const AddProduct = () => {
   const [barcodeId, setBarcodeId] = useState('');
   const [status, setStatus] = useState('');
   const [category, setCategory] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [errorMsg, setErrorMsg] = useState('');
 
 
   const ip = vars();
-
+  const cate = useFetchData(ip + 'fetchCate');
+  console.log(cate)
   const addProduct = async () => {
-
-    // console.log("name:", name);
-    // console.log("price:", price);
-    // console.log("stockCount:", stockCount);
-    // console.log("barcodeId:", barcodeId);
-    // console.log("status:", status);
-    // console.log("category:", category);
-    // console.log("date:", date);
-
+      
+      console.log("name:", name);
+      console.log("price:", price);
+      console.log("stockCount:", stockCount);
+      console.log("barcodeId:", barcodeId);
+      console.log("status:", status);
+      console.log("category:", category);
+      console.log("date:", date);
+  
       try {
-   
-      const response = await fetch(ip + 'addProduct', {
-        method: 'POST',
-        headers: {
+        
+        const formattedDate = date.toISOString();
+          const response = await fetch(ip + 'addProduct', {
+              method: 'POST',
+              headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, price, stockCount, barcodeId, status, category, date }),
+        body: JSON.stringify({ name, price, stockCount, barcodeId, status, category, date:formattedDate }),
       });
+
 
       if (response.ok) {
         const responseBody = await response.json();
@@ -43,7 +49,7 @@ const AddProduct = () => {
           setErrorMsg('');
         } else {
           setErrorMsg(responseBody.error);
-          console.log('Failed Product Added');
+          console.log('Failed Product Added ' + responseBody.error);
         }
       } else {
         setErrorMsg('Request failed');
@@ -54,18 +60,25 @@ const AddProduct = () => {
     }
   };
 
-  const categories = [
-        { label: 'Select Category', value: '' },
-        { label: 'Food', value: '64c9d5edcb64f28afac47fc2' },
-        { label: 'Others', value: '64c9d5edcb64f28afac47fc3' },
-    ];
-
     const stat = [
         { label: 'Select Category', value: '' },    
-        { label: 'instock', value: 'instock' },
-        { label: 'lowstock', value: 'lowstock' },
+        { label: 'In Stock', value: 'instock' },
+        { label: 'Low stock', value: 'lowstock' },
+        { label: 'Archived', value: 'archived' },
+        { label: 'Sold', value: 'sold' },
+
       ];
 
+      const renderCategories = () => {
+        if (cate && cate.category && Array.isArray(cate.category)) {
+          return cate.category.map(cat => (
+            <Picker.Item key={cat._id} label={cat.name} value={cat._id} />
+          ));
+        } else {
+          return null;
+        }
+      };
+  
       return (
         <View style={styles.container}>
           <Text style={styles.heading}>Add Product</Text>
@@ -108,22 +121,20 @@ const AddProduct = () => {
           </Picker>
     
           <Text style={styles.label}>SET CATEGORY:</Text>
-          <Picker
-            selectedValue={category}
-            onValueChange={itemValue => setCategory(itemValue)}
-            style={styles.picker}
-          >
-            {categories.map(cat => (
-              <Picker.Item key={cat.value} label={cat.label} value={cat.value} />
-            ))}
-          </Picker>
+      <Picker
+        selectedValue={category}
+        onValueChange={itemValue => setCategory(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Category" value="" />
+        {renderCategories()}
+      </Picker>
     
-          <TextInput
-            style={styles.input}
-            placeholder="Date"
-            onChangeText={text => setDate(text)}
-            value={date}
-          />
+      <DatePicker
+        selected={date}
+        onChange={date => setDate(date)}
+        dateFormat="yyy-MM-ddTHH"
+      />
           <Button title="Add Product" onPress={addProduct} />
     
           {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}

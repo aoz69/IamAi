@@ -108,7 +108,7 @@ exports.archivedCount = async (req, res) => {
 };
 
 exports.inStockCount = async (req, res) => {
-    const inStock = await dbModel.productModel.countDocuments({ status: 'inStock' });;
+    const inStock = await dbModel.productModel.countDocuments({ status: 'instock' });;
     res.json({ "stock": inStock });
 };
 
