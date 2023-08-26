@@ -1,26 +1,39 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView  } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import useFetchData from './fetchTest';
 import vars from '../public/vars';
-import Addbtn from '../component/addBtn'
+import Addbtn from '../component/addBtn';
 import imgg from '../public/images/1.jpg';
 
 const PieComponent = () => {
   const ip = vars();
   const products = useFetchData(ip + 'fetchProducts');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleEdit = () => {
+    // Implement edit logic using selectedProduct
+  };
+
+  const handleDelete = () => {
+    // Implement delete logic using selectedProduct
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-    <View style={styles.container}>
-      {products.products &&
-        products.products.map((product) => (
-          <View style={styles.row} key={product._id}>
-            <View style={styles.firstColumn}>
-            <Image source={imgg} style={styles.productImage}/>
-  
-            </View>
-            <View style={styles.secondColumn}>
-              <Text>
+      <View style={styles.container}>
+        {products.products &&
+          products.products.map((product) => (
+            <TouchableOpacity key={product._id} onPress={() => handleProductClick(product)}>
+              <View style={styles.row}>
+                <View style={styles.firstColumn}>
+                  <Image source={imgg} style={styles.productImage} />
+                </View>
+                <View style={styles.secondColumn}>
+                <Text>
                 <Text style={styles.productName}>
                   Name: 
                 </Text>
@@ -55,17 +68,29 @@ const PieComponent = () => {
                  Expiry Date:  
                 </Text>
                 {product.date}
-              </Text>
-            </View>
-
-          </View>
-        ))}
-      <Addbtn />
-    </View>
-  </ScrollView>
-
+              </Text>           
+                </View>
+              </View>
+              {selectedProduct === product && (
+                <View style={styles.editDeleteContainer}>
+                  <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
+                    <Text style={styles.buttonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+                    <Text style={styles.buttonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </TouchableOpacity>
+          ))}
+        <Addbtn />
+      </View>
+    </ScrollView>
   );
 };
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -108,6 +133,29 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   productName: {
+    fontWeight: 'bold',
+  },
+  editDeleteContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 8,
+    marginTop: 4,
+  },
+  editButton: {
+    backgroundColor: '#27374d',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+  },
+  deleteButton: {
+    backgroundColor: '#27374d',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    marginLeft: 8,
+  },
+  buttonText: {
+    color: 'white',
     fontWeight: 'bold',
   },
 });
