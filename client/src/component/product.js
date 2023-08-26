@@ -1,34 +1,69 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView  } from 'react-native';
 import useFetchData from './fetchTest';
 import vars from '../public/vars';
 import Addbtn from '../component/addBtn'
-
+import imgg from '../public/images/1.jpg';
 
 const PieComponent = () => {
   const ip = vars();
   const products = useFetchData(ip + 'fetchProducts');
 
   return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Product Name</Text>
-        <Text style={styles.headerText}>Price</Text>
-        <Text style={styles.headerText}>Stock Count</Text>
-        <Text style={styles.headerText}>Status</Text>
-      </View>
-
       {products.products &&
         products.products.map((product) => (
           <View style={styles.row} key={product._id}>
-            <Text style={styles.column}>{product.name}</Text>
-            <Text style={styles.column}>{product.price}</Text>
-            <Text style={styles.column}>{product.stock_Count}</Text>
-            <Text style={styles.column}>{product.status}</Text>
+            <View style={styles.firstColumn}>
+            <Image source={imgg} style={styles.productImage}/>
+  
+            </View>
+            <View style={styles.secondColumn}>
+              <Text>
+                <Text style={styles.productName}>
+                  Name: 
+                </Text>
+                {product.name}
+              </Text>
+              <Text>
+                <Text style={styles.productName}>
+                  Price: 
+                </Text>
+                {product.price}
+              </Text>
+              <Text>
+                <Text style={styles.productName}>
+                  Status: 
+                </Text>
+                {product.status}
+              </Text>
+              <Text>
+                <Text style={styles.productName}>
+                  Stock Left: 
+                </Text>
+                {product.stock_Count}
+              </Text>
+              <Text>
+                <Text style={styles.productName}>
+                  Category: 
+                </Text>
+                {product.category}
+              </Text>
+              <Text>
+                <Text style={styles.productName}>
+                 Expiry Date:  
+                </Text>
+                {product.date}
+              </Text>
+            </View>
+
           </View>
         ))}
-        <Addbtn />
+      <Addbtn />
     </View>
+  </ScrollView>
+
   );
 };
 
@@ -53,9 +88,27 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     paddingVertical: 8,
   },
-  column: {
+  firstColumn: {
     flex: 1,
-    fontSize: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  secondColumn: {
+    flex: 2,
+  },
+  thirdColumn: {
+    flex: 1,
+  },
+  fourthColumn: {
+    flex: 1,
+  },
+  productImage: {
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
+  },
+  productName: {
+    fontWeight: 'bold',
   },
 });
 

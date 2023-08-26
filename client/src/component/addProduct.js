@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Picker } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
 import useFetchData from './fetchTest';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import {Picker} from '@react-native-picker/picker';
 
 import vars from "../public/vars";
 
@@ -60,8 +60,7 @@ const AddProduct = () => {
     }
   };
 
-    const stat = [
-        { label: 'Select Category', value: '' },    
+    const stat = [   
         { label: 'In Stock', value: 'instock' },
         { label: 'Low stock', value: 'lowstock' },
         { label: 'Archived', value: 'archived' },
@@ -80,6 +79,7 @@ const AddProduct = () => {
       };
   
       return (
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.container}>
           <Text style={styles.heading}>Add Product</Text>
           <TextInput
@@ -118,6 +118,8 @@ const AddProduct = () => {
             {stat.map(cat => (
               <Picker.Item key={cat.value} label={cat.label} value={cat.value} />
             ))}
+              <Picker.Item key={""} label={"Select category"} value={""} />
+
           </Picker>
     
           <Text style={styles.label}>SET CATEGORY:</Text>
@@ -126,19 +128,17 @@ const AddProduct = () => {
         onValueChange={itemValue => setCategory(itemValue)}
         style={styles.picker}
       >
-        <Picker.Item label="Select Category" value="" />
         {renderCategories()}
+        <Picker.Item key={""} label={"Select category"} value={""} />
+
       </Picker>
-    
-      <DatePicker
-        selected={date}
-        onChange={date => setDate(date)}
-        dateFormat="yyy-MM-ddTHH"
-      />
+
           <Button title="Add Product" onPress={addProduct} />
     
           {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
         </View>
+        </ScrollView>
+
       );
     };
     
@@ -168,7 +168,6 @@ const AddProduct = () => {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 4,
-        marginBottom: 16,
       },
       errorText: {
         color: 'red',

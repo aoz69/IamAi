@@ -1,29 +1,30 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import addProduct from './addProduct';
 
-
-const AddButton = ({ onPress }) => {
-  const navigation = useNavigation()
-
-  const navLinks = [
-    { label: 'AddProduct', screen: 'AddProduct' },
-  ];
+const AddButton = () => {
+  const navigation = useNavigation();
 
   return (
-    <>
+    <View style={styles.container}>
+      {/* Your content goes here */}
+      
+      {/* Add button */}
       <TouchableOpacity
-      style={styles.addButton}
-      onPress={() => navigation.navigate('AddProduct')}
+        style={styles.addButton}
+        onPress={() => navigation.navigate('AddProduct')}
       >
-        <Text>+</Text>
+        <Text style={styles.addButtonLabel}>+</Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingBottom: 70, // Adjust this value to leave space for the button
+  },
   addButton: {
     width: 50,
     height: 50,
@@ -32,6 +33,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5, // Add some shadow for a raised effect
+    position: 'absolute',
+    bottom: 20, // Adjust this value to control the distance from the bottom
+    left: 20, // Adjust this value to control the distance from the left
   },
   addButtonLabel: {
     color: 'white',
