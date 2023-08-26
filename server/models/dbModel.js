@@ -39,8 +39,10 @@ const productModel = new mongoose.Schema({
         type:Number
     },
     barcodeId:{
-        type: Schema.Types.ObjectId,
-        ref: "barcode",
+        type:String,
+
+        // type: Schema.Types.ObjectId,
+        // ref: "barcode",
       },
     status:{
         type: String,

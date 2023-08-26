@@ -98,7 +98,7 @@ exports.fetchProductStock = async (req, res) => {
 
 
 exports.lowstockCount = async (req, res) => {
-    const activeCount = await dbModel.productModel.countDocuments({ status: 'lowstock' });;
+    const activeCount = await dbModel.productModel.countDocuments({ status: 'lowStock' });;
     res.json({ "lowstock": activeCount });
 };
 

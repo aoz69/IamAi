@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import qr from "../component/qr"
-import index from "../component/index"
 
 const logo = require('../public/images/logo.jpg');
 const home = require('../public/images/home.png');

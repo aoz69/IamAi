@@ -15,7 +15,7 @@ router.get('/fetchCateNumb', fetch.fetchCategory);
 router.get('/fetchProductNumb', fetch.fetchProductNumb);
 router.get('/fetchProducts', fetch.fetchProducts);
 router.get('/fetchCate', fetch.fetchCate);
-router.post('/productModel', save.insertProducts);
+router.post('/addProduct', save.insertProducts);
 router.post('/CateModel', save.insertCategory);
 router.get('/rev', fetch.fetchRev);
 router.get('/stockCount', fetch.fetchStockCount);
