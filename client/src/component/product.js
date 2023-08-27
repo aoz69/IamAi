@@ -11,8 +11,9 @@ const PieComponent = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleProductClick = (product) => {
-    setSelectedProduct(product);
+    setSelectedProduct(product === selectedProduct ? null : product);
   };
+
 
   const handleEdit = () => {
     // Implement edit logic using selectedProduct
@@ -83,7 +84,7 @@ const PieComponent = () => {
               )}
             </TouchableOpacity>
           ))}
-        <Addbtn />
+      <Addbtn screen='AddProduct'/>
       </View>
     </ScrollView>
   );

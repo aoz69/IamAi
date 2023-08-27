@@ -2,17 +2,14 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const AddButton = () => {
+const AddButton = ({screen}) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      {/* Your content goes here */}
-      
-      {/* Add button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('AddProduct')}
+        onPress={() => navigation.navigate(screen)}
       >
         <Text style={styles.addButtonLabel}>+</Text>
       </TouchableOpacity>
