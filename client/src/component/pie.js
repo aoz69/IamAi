@@ -7,30 +7,32 @@ import vars from '../public/vars';
 const PieComponent = () => {
   const ip = vars();
 
-  const lowStock = useFetchData(ip +'lowstockCount');
-  const archivedStock = useFetchData(ip +'archivedCount');
-  const inStock = useFetchData(ip +'inStockCount');
-  const soldStock = useFetchData(ip +'soldCount');
+  const lowStockData = useFetchData(ip + 'lowstockCount');
+  const archivedStockData = useFetchData(ip + 'archivedCount');
+  const inStockData = useFetchData(ip + 'inStockCount');
+  const soldStockData = useFetchData(ip + 'soldCount');
+
+  const lowStock = parseInt(lowStockData.lowstock);
+  const archivedStock = parseInt(archivedStockData.archived);
+  const inStock = parseInt(inStockData.stock);
+  const soldStock = parseInt(soldStockData.soldStock);
+
+  console.log("lowStockData:", lowStockData);
+  console.log("archivedStockData:", archivedStockData);
+  console.log("inStockData:", inStockData);
+  console.log("soldStockData:", soldStockData);
 
   
-  if (!lowStock | !archivedStock | !inStock | !soldStock ) {
-    return <Text>Fetching Products is taking longer than usual</Text>;
-  }
+  // if (!lowStock || !archivedStock || !inStock || !soldStock) {
+  //   // Data is still being fetched, show loading or a placeholder
+  //   return <Text>Loading...</Text>;
+  // }
 
-  // const stockCountsArray = products.stock.map(item => item.status);
-  // const widthAndHeight = 200;
-  // const series = stockCountsArray; 
-  // const sliceColorData = [
-  //   { color: '#ef9b20', name: stockCountsArray[0], value: 5},
-  //   { color: '#edbf33', name: stockCountsArray[1], value:  20},
-  //   { color: '#bdcf32', name: stockCountsArray[2], value:  10},
-  //   { color: '#bddf32', name: stockCountsArray[2], value:  10},
-
-  const total = lowStock.lowstock + archivedStock.stock +  inStock.lowstock + soldStock.soldStock
-  const lo = (lowStock.lowstock/total) * 100
-  const ar = (archivedStock.stock/total) * 100
-  const is = (inStock.lowstock/total) * 100
-  const ss = (soldStock.soldStock/total) * 100
+  const total = lowStock + archivedStock +  inStock + soldStock
+  const lo = (lowStock/total) * 100
+  const ar = (archivedStock/total) * 100
+  const is = (inStock/total) * 100
+  const ss = (soldStock/total) * 100
   const lowStocks = lo;
   const archivedStocks = ar;
   const inStocks = is;

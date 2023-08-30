@@ -1,7 +1,6 @@
 import { StyleSheet, Text,View,ScrollView } from 'react-native'
 import React, { Component } from 'react'
 import PieChart from 'react-native-pie-chart'
-// import Nav from '../component/nav'
 
 export default class TestChart extends Component {
   render() {

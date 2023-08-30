@@ -10,7 +10,6 @@ const pro = require('../public/images/pro.png');
 const qrr = require('../public/images/qr.png');
 const logout = require('../public/images/logOut.png');
 
-
 export default function LeftSideNavBar() {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
@@ -22,7 +21,6 @@ export default function LeftSideNavBar() {
     { label: 'QR', screen: 'QR', img: qrr },
     { label: 'Profile', screen: 'Profile', img: pro },
     { label: 'Logout', screen: 'Logout', img: logout },
-
   ];
 
   return (
@@ -63,30 +61,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#DDE6ED',
     paddingTop: 20,
-    paddingHorizontal: 1,
+    paddingHorizontal: 20,
+    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.1)',
   },
   logo: {
     height: 50,
     resizeMode: 'contain',
+    marginBottom: 20,
   },
   linkContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    boxShadow: '0 2px',
+    paddingVertical: 15,
   },
   linkLogo: {
-    width: 80,
-    height: 50,
-    marginRight: 10,
-    marginTop: 20,
+    width: 30,
+    height: 30,
+    marginRight: 15,
     resizeMode: 'contain',
   },
   linkText: {
-    fontSize: 30,
+    fontSize: 18,
     color: '#333',
   },
-  // Styles for the navigation bar on phones
   phoneContainer: {
     position: 'absolute',
     bottom: 0,
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
   },
   phoneLinkLogo: {
     width: 30,
-    height: 60,
+    height: 30,
     resizeMode: 'contain',
   },
 });

@@ -22,18 +22,8 @@ const ListWithButtons = ({ data, screenName, handleEdit, handleDelete }) => {
                 <Image source={imgg} style={styles.productImage} />
               </View>
               <View style={styles.secondColumn}>
-                <Text>
-                  <Text style={styles.productName}>
-                    Id: 
-                  </Text>
-                  {item._id}
-                </Text>
-                <Text>
-                  <Text style={styles.productName}>
-                    Name: 
-                  </Text>
-                  {item.name}
-                </Text>
+                <Text style={styles.productName}>Id: {item._id}</Text>
+                <Text style={styles.productName}>Name: {item.name}</Text>
               </View>
               {selectedItem === item && (
                 <View style={styles.editDeleteContainer}>
@@ -88,6 +78,9 @@ const PieComponent = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     padding: 16,
@@ -98,14 +91,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#ccc',
     paddingVertical: 8,
+    alignItems: 'center',
   },
   firstColumn: {
-    flex: 1,
+    width: 70,
+    height: 70,
     alignItems: 'center',
     justifyContent: 'center',
   },
   secondColumn: {
-    flex: 2,
+    flex: 1,
+    marginLeft: 16,
   },
   productImage: {
     width: 70,
@@ -117,9 +113,8 @@ const styles = StyleSheet.create({
   },
   editDeleteContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 8,
-    marginTop: 4,
+    alignItems: 'center',
+    marginLeft: 16,
   },
   editButton: {
     backgroundColor: '#27374d',
@@ -128,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   deleteButton: {
-    backgroundColor: '#27374d',
+    backgroundColor: '#d9534f',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 5,

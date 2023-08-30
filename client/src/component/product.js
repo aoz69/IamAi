@@ -19,9 +19,14 @@ const PieComponent = () => {
     // Implement edit logic using selectedProduct
   };
 
+  const handleBrowse = () => {
+    // Implement Browse logic using selectedProduct
+  };
+
   const handleDelete = () => {
     // Implement delete logic using selectedProduct
   };
+
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -29,53 +34,31 @@ const PieComponent = () => {
         {products.products &&
           products.products.map((product) => (
             <TouchableOpacity key={product._id} onPress={() => handleProductClick(product)}>
-              <View style={styles.row}>
-                <View style={styles.firstColumn}>
+              <View
+                style={[
+                  styles.productContainer,
+                  selectedProduct === product && styles.selectedProductContainer,
+                ]}
+              >
+                <View style={styles.productImageContainer}>
                   <Image source={imgg} style={styles.productImage} />
                 </View>
-                <View style={styles.secondColumn}>
-                <Text>
-                <Text style={styles.productName}>
-                  Name: 
-                </Text>
-                {product.name}
-              </Text>
-              <Text>
-                <Text style={styles.productName}>
-                  Price: 
-                </Text>
-                {product.price}
-              </Text>
-              <Text>
-                <Text style={styles.productName}>
-                  Status: 
-                </Text>
-                {product.status}
-              </Text>
-              <Text>
-                <Text style={styles.productName}>
-                  Stock Left: 
-                </Text>
-                {product.stock_Count}
-              </Text>
-              <Text>
-                <Text style={styles.productName}>
-                  Category: 
-                </Text>
-                {product.category}
-              </Text>
-              <Text>
-                <Text style={styles.productName}>
-                 Expiry Date:  
-                </Text>
-                {product.date}
-              </Text>           
+                <View style={styles.productDetailsContainer}>
+                  <Text style={styles.productName}>{product.name}</Text>
+                  <Text style={styles.productPrice}>Price: {product.price}</Text>
+                  <Text style={styles.productStatus}>Status: {product.status}</Text>
+                  <Text style={styles.productStock}>Stock Left: {product.stock_Count}</Text>
+                  <Text style={styles.productCategory}>Category: {product.category}</Text>
+                  <Text style={styles.productExpiry}>Expiry Date: {product.date}</Text>
                 </View>
               </View>
               {selectedProduct === product && (
-                <View style={styles.editDeleteContainer}>
+                <View style={styles.actionsContainer}>
                   <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
                     <Text style={styles.buttonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.editButton} onPress={handleBrowse}>
+                    <Text style={styles.buttonText}>Browse Category</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
                     <Text style={styles.buttonText}>Delete</Text>
@@ -84,63 +67,75 @@ const PieComponent = () => {
               )}
             </TouchableOpacity>
           ))}
-      <Addbtn screen='AddProduct'/>
+        <Addbtn screen='AddProduct' />
       </View>
     </ScrollView>
   );
 };
 
-
-
-
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
-    padding: 16,
+    width: '90%',
+    paddingTop: 16,
+    alignSelf: 'center',
   },
-  header: {
+  productContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  headerText: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderColor: '#ccc',
-    paddingVertical: 8,
+    paddingVertical: 12,
   },
-  firstColumn: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  selectedProductContainer: {
+    backgroundColor: '#dde6ed', // Darker background for selected product
   },
-  secondColumn: {
-    flex: 2,
-  },
-  thirdColumn: {
-    flex: 1,
-  },
-  fourthColumn: {
-    flex: 1,
+  productImageContainer: {
+    marginRight: 10,
   },
   productImage: {
-    width: 70,
-    height: 70,
-    resizeMode: 'contain',
+    width: 100,
+    height: 100,
+    resizeMode: 'cover',
+    borderRadius: 8,
+  },
+  productDetailsContainer: {
+    flex: 1,
   },
   productName: {
     fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 4,
   },
-  editDeleteContainer: {
+  productPrice: {
+    color: '#666',
+    marginBottom: 2,
+  },
+  productStatus: {
+    color: '#666',
+    marginBottom: 2,
+  },
+  productStock: {
+    color: '#666',
+    marginBottom: 2,
+  },
+  productCategory: {
+    color: '#666',
+    marginBottom: 2,
+  },
+  productExpiry: {
+    color: '#666',
+  },
+  actionsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 8,
-    marginTop: 4,
+    alignItems: 'center',
+    marginTop: 8,
   },
   editButton: {
     backgroundColor: '#27374d',
@@ -149,7 +144,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   deleteButton: {
-    backgroundColor: '#27374d',
+    backgroundColor: '#d9534f',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 5,

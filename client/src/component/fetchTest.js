@@ -23,4 +23,4 @@ export default function useFetchData(url) {
   }, [url]);
 
   return data;
-} 
+}
