@@ -1,6 +1,5 @@
 const themeConfig = {
-  // ** Layout Configs
-  templateName: 'IMS' /* App Name */,
+
   mode: 'dark' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
   // ** Routing Configs
