@@ -6,7 +6,7 @@ const port = 3000;
 const home = require("./routes/routes");
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
-const ip = "192.168.1.77";
+const ip = "localhost";
 // const cookieParser = require("cookie-parser");
 
 app.use(express.json()); //this is the build in express body-parser

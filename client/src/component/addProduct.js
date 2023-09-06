@@ -55,10 +55,13 @@ const AddProduct = () => {
 
   const renderCategories = () => {
     if (cate && cate.category && Array.isArray(cate.category)) {
+      console.log("BRRRRRRRRRRRRRRR")
       return cate.category.map((cat) => (
         <Picker.Item key={cat._id} label={cat.name} value={cat._id} />
       ));
-    } else {
+    } 
+    else {
+      console.log("ERRRRRRR")
       return null;
     }
   };
