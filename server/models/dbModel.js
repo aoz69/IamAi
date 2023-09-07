@@ -47,7 +47,7 @@ const productModel = new mongoose.Schema({
     status:{
         type: String,
         required: true,
-        enum: ["instock", "lowstock", "sold" ,"archived" ],
+        enum: ["instock", "lowStock", "sold" ,"archived" ],
         default: "active",
     }, 
     category:{

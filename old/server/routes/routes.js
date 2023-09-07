@@ -26,14 +26,6 @@ router.get('/archivedCount', fetch.archivedCount);
 router.get('/inStockCount', fetch.inStockCount);
 router.get('/soldCount', fetch.soldCount);
 
-router.get('/fetchLowStock', fetch.fetchLowStock);
-router.get('/fetchArchived', fetch.fetchArchived);
-router.get('/fetchInStock', fetch.fetchInStock);
-router.get('/fetchSold', fetch.fetchSold);
-
-
-
-
 router.get('/user', fetch.fetchUsers);
 router.get('/getSession' , index.getSession)
 

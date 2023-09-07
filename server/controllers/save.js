@@ -38,14 +38,7 @@ exports.insertUsers = async (req, res) => {
   
 
 exports.insertProducts = async (req,res) =>{
-  console.log("name:", req.body.name);
-  console.log("price:", req.body.price);
-  console.log("stockCount:", req.body.stock_Count);
-  console.log("barcodeId:", req.body.barcodeId);
-  console.log("status:", req.body.status);
-  console.log("category:", req.body.category);
-  console.log("date:", req.body.date);
-    
+
     try {
         const products = new dbModel.productModel({
             name: req.body.name,

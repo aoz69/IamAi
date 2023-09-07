@@ -102,7 +102,7 @@ exports.inStockCount = async (req, res) => {
     res.json({ "stock": inStock });
 };
 exports.lowstockCount = async (req, res) => {
-    const activeCount = await dbModel.productModel.countDocuments({ status: 'lowStock' });;
+    const activeCount = await dbModel.productModel.countDocuments({ status: 'lowstock'});;
     res.json({ "lowstock": activeCount });
 };
 
@@ -117,4 +117,23 @@ exports.archivedCount = async (req, res) => {
 };
 
 
+exports.fetchLowStock = async (req, res) => {
+    const productsInStock = await dbModel.productModel.find({
+    $or: [{ status: 'lowStock' }, { status: 'lowstock' }]});
+    res.json({ products: productsInStock });
+};
 
+exports.fetchArchived = async (req, res) => {
+    const productsInStock = await dbModel.productModel.find({ status: 'archived' });
+    res.json({ products: productsInStock });
+};
+
+exports.fetchInStock = async (req, res) => {
+    const productsInStock = await dbModel.productModel.find({ status: 'instock' });
+    res.json({ products: productsInStock });
+};
+
+exports.fetchSold = async (req, res) => {
+    const productsInStock = await dbModel.productModel.find({ status: 'sold' });
+    res.json({ products: productsInStock });
+};

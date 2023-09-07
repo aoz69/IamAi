@@ -24,7 +24,7 @@ const navigation = () => {
 
     {
       title: 'Product Tables',
-      path: '/tables'
+      path: '/productTable'
     },
     {
       title: 'Product Status Tables',
