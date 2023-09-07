@@ -1,8 +1,6 @@
-
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -13,7 +11,7 @@ import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
@@ -66,7 +64,6 @@ const LoginPage = () => {
     const data = await response.json();
 
     if (data.status === 'success') {
-      // Reset the error message and navigate to the dashboard
       setErrorMessage('');
       router.push('/');
     } else {
@@ -165,3 +162,4 @@ const LoginPage = () => {
 }         
 LoginPage.getLayout = page => <BlankLayout>{page}</BlankLayout>
 export default LoginPage
+  

@@ -9,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import Typography from '@mui/material/Typography';
 
+
 const CategoryTable = () => {
   const [categories, setCategories] = useState([]);
 
