@@ -1,103 +1,81 @@
-// ** MUI Imports
-import Card from '@mui/material/Card'
-import Button from '@mui/material/Button'
-import { useTheme } from '@mui/material/styles'
-import CardHeader from '@mui/material/CardHeader'
-import IconButton from '@mui/material/IconButton'
-import CardContent from '@mui/material/CardContent'
+import React, { useState, useEffect } from 'react';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import { PieChart, Pie, Cell, Legend } from 'recharts';
 
-// ** Icons Imports
-import DotsVertical from 'mdi-material-ui/DotsVertical'
+const StyledCard = {
+  maxWidth: '400px',
+  padding: '16px',
+  margin: 'auto',
+  position: 'relative',
+  textAlign: 'center',
+};
 
-// ** Custom Components Imports
-import ReactApexcharts from 'src/@core/components/react-apexcharts'
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
 
-const WeeklyOverview = () => {
-  // ** Hook
-  const theme = useTheme()
+const MyPieChart = () => {
+  const [chartData, setChartData] = useState(null);
 
-  const options = {
-    chart: {
-      parentHeightOffset: 0,
-      toolbar: { show: false }
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 9,
-        distributed: true,
-        columnWidth: '40%',
-        endingShape: 'rounded',
-        startingShape: 'rounded'
-      }
-    },
-    stroke: {
-      width: 2,
-      colors: [theme.palette.background.paper]
-    },
-    legend: { show: false },
-    grid: {
-      strokeDashArray: 7,
-      padding: {
-        top: -1,
-        right: 0,
-        left: -12,
-        bottom: 5
-      }
-    },
-    dataLabels: { enabled: false },
-    colors: [
-      theme.palette.background.default,
-      theme.palette.background.default,
-      theme.palette.background.default,
-      theme.palette.primary.main,
-      theme.palette.background.default,
-      theme.palette.background.default
-    ],
-    states: {
-      hover: {
-        filter: { type: 'none' }
-      },
-      active: {
-        filter: { type: 'none' }
-      }
-    },
-    xaxis: {
-      categories: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      tickPlacement: 'on',
-      labels: { show: false },
-      axisTicks: { show: false },
-      axisBorder: { show: false }
-    },
-    yaxis: {
-      show: true,
-      tickAmount: 4,
-      labels: {
-        offsetX: -17,
-        formatter: value => `${value > 999 ? `${(value / 1000).toFixed(0)}` : value}k`
-      }
-    }
+  useEffect(() => {
+    Promise.all([
+      fetchData('http://localhost:3100/lowstockCount'),
+      fetchData('http://localhost:3100/archivedCount'),
+      fetchData('http://localhost:3100/inStockCount'),
+      fetchData('http://localhost:3100/soldCount'),
+    ])
+      .then((data) => {
+        const [lowStockData, archivedStockData, inStockData, soldStockData] = data;
+        const total = lowStockData.lowstock + archivedStockData.archived + inStockData.stock + soldStockData.soldStock;
+        setChartData([
+          { name: 'Low stock', value: (lowStockData.lowstock / total) * 100 },
+          { name: 'Archived', value: (archivedStockData.archived / total) * 100 },
+          { name: 'In stock', value: (inStockData.stock / total) * 100 },
+          { name: 'Sold', value: (soldStockData.soldStock / total) * 100 },
+        ]);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  if (!chartData) {
+    return <Typography>Loading...</Typography>;
   }
 
-  return (
-    <Card>
-      <CardHeader
-        title='Weekly Overview'
-        titleTypographyProps={{
-          sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
-        }}
-        action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-          </IconButton>
-        }
-      />
-      <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
-        <ReactApexcharts type='bar' height={205} options={options} series={[{ data: [37, 57, 45, 75, 57, 40, 65] }]} />
-        <Button fullWidth variant='contained'>
-          Details
-        </Button>
-      </CardContent>
-    </Card>
-  )
-}
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
-export default WeeklyOverview
+  return (
+    <Card style={StyledCard}>
+      <Typography variant="h6">Weekly Overview</Typography>
+      <PieChart width={300} height={300}>
+        <Pie
+          data={chartData}
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          fill="#8884d8"
+          isAnimationActive={true}
+          dataKey="value"
+        >
+          {chartData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Pie>
+        <Legend
+          align="left"
+          verticalAlign="bottom"
+          iconSize={16}
+          wrapperStyle={{ paddingBottom: '10px' }}
+        />
+      </PieChart>
+    </Card>
+  );
+};
+
+export default MyPieChart;

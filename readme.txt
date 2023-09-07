@@ -22,6 +22,7 @@ login
 reg
 add cate
 add prod
+pie chart
 ########################################### completed: ###########################################
 
 
@@ -31,7 +32,6 @@ add prod
 edit
 delete
 qr generation
-pie chart
 Notification
 Session
 ########################################### need to do: ###########################################
