@@ -65,68 +65,70 @@ const DashboardTable = () => {
 
   return (
     <Card>
-      <TableContainer sx={{ minWidth: 800 }}>
-        <Table aria-label='table in dashboard'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>BarcodeId</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell>Expiry</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Edit</TableCell>
-              <TableCell>Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => (
-                <TableRow hover key={index}>
-                  <TableCell>
-                    <Box>
-                      <Typography>{row.name}</Typography>
-                    </Box>
-                  </TableCell>
-                  <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.barcodeId}</TableCell>
-                  <TableCell>{row.category}</TableCell>
-                  <TableCell>{row.expiry}</TableCell>
-                  <TableCell>
-                    <Chip
-                      label={row.status}
-                      color={statusObj[row.status]?.color || 'default'}
-                      sx={{
-                        height: 24,
-                        textTransform: 'capitalize',
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    <IconButton>
-                      <DeleteForeverIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5]}
-        component='div'
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+       <div style={{ maxHeight: '400px', overflow: 'auto' }}>
+       <TableContainer sx={{ minWidth: 800 }}>
+          <Table aria-label='table in dashboard'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>BarcodeId</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Expiry</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Edit</TableCell>
+                <TableCell>Delete</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => (
+                  <TableRow hover key={index}>
+                    <TableCell>
+                      <Box>
+                        <Typography>{row.name}</Typography>
+                      </Box>
+                    </TableCell>
+                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{row.barcodeId}</TableCell>
+                    <TableCell>{row.category}</TableCell>
+                    <TableCell>{row.expiry}</TableCell>
+                    <TableCell>
+                      <Chip
+                        label={row.status}
+                        color={statusObj[row.status]?.color || 'default'}
+                        sx={{
+                          height: 24,
+                          textTransform: 'capitalize',
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton>
+                        <DeleteForeverIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5]}
+          component='div'
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
     </Card>
   );
 };

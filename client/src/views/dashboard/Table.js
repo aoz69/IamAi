@@ -51,8 +51,8 @@ const DashboardTable = () => {
 
   return (
     <Card>
-      <TableContainer>
-        <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
+      <TableContainer  sx={{ minWidth: 800 }}>
+        <Table aria-label='table in dashboard'>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>

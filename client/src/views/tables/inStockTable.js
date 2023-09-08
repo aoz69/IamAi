@@ -65,6 +65,7 @@ const DashboardTable = () => {
 
   return (
     <Card>
+      <div style={{ maxHeight: '400px', overflow: 'auto' }}>
       <TableContainer sx={{ minWidth: 800 }}>
         <Table aria-label='table in dashboard'>
           <TableHead>
@@ -127,6 +128,7 @@ const DashboardTable = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+            </div>
     </Card>
   );
 };

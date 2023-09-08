@@ -8,6 +8,9 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 const CategoryTable = () => {
@@ -27,12 +30,15 @@ const CategoryTable = () => {
 
   return (
     <Card>
+    <div style={{ maxHeight: '400px', overflow: 'auto' }}>
       <TableContainer sx={{ minWidth: 400 }}>
         <Table aria-label='table for categories'>
           <TableHead>
             <TableRow>
               <TableCell>Category ID</TableCell>
               <TableCell>Category Name</TableCell>
+              <TableCell>Edit</TableCell>
+              <TableCell>Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,11 +54,22 @@ const CategoryTable = () => {
                     <Typography>{category.name}</Typography>
                   </Box>
                 </TableCell>
+                <TableCell>
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                </TableCell>
+                <TableCell>
+                  <IconButton>
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+    </div>
     </Card>
   );
 };
