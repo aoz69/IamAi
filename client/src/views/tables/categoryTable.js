@@ -13,6 +13,27 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
+const handleDeleteClick = (categoryId) => {
+  if (window.confirm('Are you sure you want to delete this category?')) {
+    fetch(`http://localhost:3100/delete/category/${categoryId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert(`${data.message}`);
+          window.location.reload()
+        } else {
+          alert(`Failed to delete product: ${data.error}`);
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting product:', error);
+        alert(error);
+      });
+  }
+};
+
 const CategoryTable = () => {
   const [categories, setCategories] = useState([]);
 
@@ -60,9 +81,9 @@ const CategoryTable = () => {
                   </IconButton>
                 </TableCell>
                 <TableCell>
-                  <IconButton>
-                    <DeleteForeverIcon />
-                  </IconButton>
+                <IconButton onClick={() => handleDeleteClick(category._id)}>
+                  <DeleteForeverIcon />
+                </IconButton>
                 </TableCell>
               </TableRow>
             ))}

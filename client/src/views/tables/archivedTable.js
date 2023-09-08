@@ -20,6 +20,27 @@ const statusObj = {
   sold: { color: 'success' },
 };
 
+const handleDeleteClick = (productId) => {
+  if (window.confirm('Are you sure you want to delete this product?')) {
+    fetch(`http://localhost:3100/delete/product/${productId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert(`${data.message}`);
+          window.location.reload()
+        } else {
+          alert(`Failed to delete product: ${data.error}`);
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting product:', error);
+        alert(error);
+      });
+  }
+};
+
 const DashboardTable = () => {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
@@ -110,7 +131,7 @@ const DashboardTable = () => {
                     </IconButton>
                   </TableCell>
                   <TableCell>
-                    <IconButton>
+                  <IconButton onClick={() => handleDeleteClick(row._id)}>
                       <DeleteForeverIcon />
                     </IconButton>
                   </TableCell>

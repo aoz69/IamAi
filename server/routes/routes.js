@@ -5,6 +5,8 @@ const admin = require("../controllers/admin");
 const save = require("../controllers/save");
 const dbcon = require("../controllers/dbcon");
 const fetch = require("../controllers/fetch");
+const del = require('../controllers/delete');
+
 
 
 router.get("/", index.index);
@@ -42,5 +44,40 @@ router.post('/addUser', save.insertUsers);
 router.post('/checkUser' , index.checkUser);
 router.post('/addProduct', save.insertProducts);
 router.post('/CateModel', save.insertCategory);
+
+
+// Delete a product by ID
+router.delete('/delete/product/:productId', async (req, res) => {
+    try {
+      const { productId } = req.params;
+      const result = await del.deleteResource('product', productId);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+  
+  // Delete a category by ID
+  router.delete('/delete/category/:categoryId', async (req, res) => {
+    try {
+      const { categoryId } = req.params;
+      const result = await del.deleteResource('category', categoryId);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+  
+  // Delete a user by ID
+  router.delete('/delete/user/:userId', async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const result = await del.deleteResource('user', userId);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+  
 
 module.exports = router;
