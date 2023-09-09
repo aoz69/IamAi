@@ -8,9 +8,10 @@ import CardContent from '@mui/material/CardContent';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 
-const TabAccount = () => {
+const profile = () => {
   const [user, setUser] = useState({});
   const [formData, setFormData] = useState({
+    id: '',
     name: '',
     email: '',
     role: '',
@@ -27,12 +28,12 @@ const TabAccount = () => {
       .then((data) => {
         if (data.status === 'success' && data.user) {
           setUser(data.user);
-          // Populate form fields with user data
           setFormData({
+            id : data.user._id,
             name: data.user.name,
             email: data.user.email,
             role: data.user.role,
-            newPassword: '', // Clear newPassword field
+            newPassword: '', 
           });
         } else {
           router.push('pages/login');
@@ -51,6 +52,7 @@ const TabAccount = () => {
     e.preventDefault();
     try {
       const userId = user._id;
+      console.log(userId)
 
       const requestBody = {
         id: userId,
@@ -150,4 +152,4 @@ const TabAccount = () => {
   );
 };
 
-export default TabAccount;
+export default profile;

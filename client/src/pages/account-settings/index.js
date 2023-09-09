@@ -12,7 +12,7 @@ import MuiTab from '@mui/material/Tab'
 
 // ** Icons Imports
 import AccountOutline from 'mdi-material-ui/AccountOutline'
-import TabAccount from 'src/views/account-settings/TabAccount'
+import Profile from 'src/views/profile/profile'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -46,7 +46,7 @@ const AccountSettings = () => {
       <TabContext value={value}>
         <TabList
           onChange={handleChange}
-          aria-label='account-settings tabs'
+          aria-label='profile tabs'
           sx={{ borderBottom: theme => `1px solid ${theme.palette.divider}` }}
         >
           <Tab
@@ -61,7 +61,7 @@ const AccountSettings = () => {
 
         </TabList>
         <TabPanel sx={{ p: 0 }} value='account'>
-          <TabAccount />
+          <Profile />
         </TabPanel>
       </TabContext>
     </Card>

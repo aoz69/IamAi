@@ -37,6 +37,38 @@ exports.insertUsers = async (req, res) => {
   };
   
 
+  exports.updateUser = async (req, res) => {
+    const userId = req.params.userId; 
+    const updateData = req.body;
+  
+    try {
+      const user = await dbModel.userModel.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      user.name = updateData.name || user.name;
+      user.role = updateData.role || user.role;
+      user.email = updateData.email || user.email;
+      user.password = updateData.password || user.password;
+
+
+      if (updateData.password) {
+        const hashedPass = await hashing.genSalt(10);
+        user.password = await hashing.hash(updateData.password, hashedPass);
+      }
+
+      await user.save();
+  
+      res.json({ success: "User updated successfully" });
+    } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).json({ error: "Server error, try again" });
+    }
+  };
+  
+
 exports.insertProducts = async (req,res) =>{
 
     try {

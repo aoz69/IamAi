@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useEffect, useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
@@ -12,14 +12,34 @@ import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 
 
-
-
 const UserDropdown = () => {
-  
-  const [logoutSuccess, setLogoutSuccess] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useState({});
+  const [logoutSuccess, setLogoutSuccess] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null)
   const router = useRouter()
+
+
+  
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('http://localhost:3100/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        console.log(data);
+        setLogoutSuccess(true);
+        router.push('/pages/login');
+      } else {
+        setLogoutSuccess(false);
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      setLogoutSuccess(false);
+    }
+  };
 
   const handleDropdownOpen = event => {
     setAnchorEl(event.currentTarget)
@@ -32,29 +52,9 @@ const UserDropdown = () => {
     setAnchorEl(null)
   }
 
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('http://localhost:3100/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const data = await response.json();
-
-      if (data.success) {
-        console.log(data)
-        setLogoutSuccess(true);
-        router.push('/pages/login');
-
-      } else {
-        setLogoutSuccess(false);
-      }
-    } catch (error) {
-      console.error('Logout error:', error);
-      setLogoutSuccess(false);
-    }
+  const handleProfileClick = () => {
+    router.push('/profile'); 
   };
-
 
   const styles = {
     py: 2,
@@ -67,6 +67,7 @@ const UserDropdown = () => {
   }
 
 
+ 
   useEffect(() => {
     fetch('http://localhost:3100/getSession', {
       method: 'GET',
@@ -117,18 +118,18 @@ const UserDropdown = () => {
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 600 }}>
-                {user.name}
+              {user.name}
                 </Typography>
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleClick()}>
-          <Box sx={styles}>
-            <AccountOutline sx={{ marginRight: 2 }} />
-            Profile
-          </Box>
-        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={handleProfileClick}>
+        <Box sx={styles}>
+          <AccountOutline sx={{ marginRight: 2 }} />
+          Profile
+        </Box>
+      </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleClick()}>
           <Box sx={styles}>
             <AccountOutline sx={{ marginRight: 2 }} />

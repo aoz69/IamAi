@@ -5,7 +5,7 @@ const navigation = () => {
       path: '/'
     },
     {
-      title: 'Account Settings',
+      title: 'Profile',
       path: '/account-settings'
     },
     {

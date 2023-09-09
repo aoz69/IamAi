@@ -46,6 +46,7 @@ router.post('/checkUser' , index.checkUser);
 router.post('/addProduct', save.insertProducts);
 router.post('/CateModel', save.insertCategory);
 
+router.put('/updateUser/:userId', save.updateUser);
 
 // Delete a product by ID
 router.delete('/delete/product/:productId', async (req, res) => {
