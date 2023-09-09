@@ -15,6 +15,8 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 
 
 const UserDropdown = () => {
+  
+  const [logoutSuccess, setLogoutSuccess] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null)
   const router = useRouter()
 
@@ -28,6 +30,31 @@ const UserDropdown = () => {
     }
     setAnchorEl(null)
   }
+
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        setLogoutSuccess(true);
+      } else {
+        setLogoutSuccess(false);
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      setLogoutSuccess(false);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (logoutSuccess === true) {
+      
+  //   }
+  // }, [logoutSuccess]);
 
   const styles = {
     py: 2,
@@ -89,7 +116,7 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/pages/login')}>
+        <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>

@@ -34,10 +34,9 @@ router.get('/fetchInStock', fetch.fetchInStock);
 router.get('/fetchSold', fetch.fetchSold);
 
 
-
-
 router.get('/user', fetch.fetchUsers);
 router.get('/getSession' , index.getSession)
+router.post('/logout', index.logout);
 
 // POST REQUESTS
 router.post('/addUser', save.insertUsers);

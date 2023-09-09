@@ -52,6 +52,7 @@ const LoginPage = () => {
   try {
     const response = await fetch('http://localhost:3100/checkUser', {
       method: 'POST',
+      credentials : 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -64,6 +65,7 @@ const LoginPage = () => {
     const data = await response.json();
 
     if (data.status === 'success') {
+      console.log('LOGGED IN')
       setErrorMessage('');
       router.push('/');
     } else {

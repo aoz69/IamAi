@@ -13,31 +13,32 @@ exports.checkUser = async (req, res) => {
   const password = req.body.password;
 
   try {
-    const user = await model.userModel.findOne({ email }).exec();
+    const user = await model.userModel.findOne({ email });
 
     if (!user) {
       console.log("Wrong Email");
       return res.json({ status: "error", error: "No user with that email is registered" });
     }
 
-    bcrypt.compare(password, user.password).then((isMatch) => {
+    const isMatch = await bcrypt.compare(password, user.password)
+    // .then((isMatch) => {
       if (isMatch) {
-        const userData = {
+        req.session.user = {
           _id: user.id,
           email: user.email,
           role: user.role,
         };
 
-        req.session.user = userData;
+        // req.session.user = userData;
         console.log(req.session.user);
         return res.json({ status: "success", message: "Login successful" });
       } else {
         return res.json({ status: "error", error: "Invalid password" });
       }
-    }).catch((error) => {
-      console.error(error);
-      res.json({ status: "error", error: "Server error, try again" });
-    });
+    // }).catch((error) => {
+    //   console.error(error);
+    //   res.json({ status: "error", error: "Server error, try again" });
+    // });
   } catch (error) {
     console.error(error);
     res.json({ status: "error", error: "Server error, try again" });
@@ -46,13 +47,13 @@ exports.checkUser = async (req, res) => {
 
   exports.getSession = async(req,res) =>{
     const user = req.session.user;
+    console.log(req.session);
+
     if (user) {
       console.log("yes")
         res.json({ status: 'success', user });
-
-    } else {
+    } else {  
       console.log("no")
-
         res.json({ status: 'error', message: 'User data not found in session' });
       }
   }
@@ -62,8 +63,10 @@ exports.logout = (req, res) => {
   req.session.destroy((err) => {
       if (err) {
           res.json({ success: false });
+          console.log('Logged out Error');
       } else {
           res.json({ success: true });
+          console.log('Logged out');
       }
   });
   res.clearCookie("token");
