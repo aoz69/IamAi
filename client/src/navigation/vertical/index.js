@@ -6,7 +6,7 @@ const navigation = () => {
     },
     {
       title: 'Profile',
-      path: '/account-settings'
+      path: '/profile'
     },
     {
       sectionTitle: 'Actions'
