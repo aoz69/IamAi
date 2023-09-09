@@ -24,6 +24,7 @@ add cate
 add prod
 pie chart
 delete
+Session
 ########################################### completed: ###########################################
 
 
@@ -33,5 +34,4 @@ delete
 edit
 qr generation
 Notification
-Session
 ########################################### need to do: ###########################################

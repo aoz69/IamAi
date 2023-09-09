@@ -6,6 +6,8 @@ const save = require("../controllers/save");
 const dbcon = require("../controllers/dbcon");
 const fetch = require("../controllers/fetch");
 const del = require('../controllers/delete');
+const { userModel, productModel, categoryModel } = require('../models/dbModel');
+
 
 
 
@@ -61,6 +63,7 @@ router.delete('/delete/product/:productId', async (req, res) => {
     try {
       const { categoryId } = req.params;
       const result = await del.deleteResource('category', categoryId);
+      await productModel.deleteMany({category: categoryId})
       res.json(result);
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
