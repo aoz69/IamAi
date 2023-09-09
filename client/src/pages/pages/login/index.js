@@ -65,7 +65,6 @@ const LoginPage = () => {
     const data = await response.json();
 
     if (data.status === 'success') {
-      console.log('LOGGED IN')
       setErrorMessage('');
       router.push('/');
     } else {

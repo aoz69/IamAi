@@ -27,6 +27,7 @@ exports.checkUser = async (req, res) => {
           _id: user.id,
           email: user.email,
           role: user.role,
+          name: user.name,
         };
 
         // req.session.user = userData;
@@ -47,10 +48,10 @@ exports.checkUser = async (req, res) => {
 
   exports.getSession = async(req,res) =>{
     const user = req.session.user;
-    console.log(req.session);
+    // console.log(req.session);
 
     if (user) {
-      console.log("yes")
+      console.log("yes" + req.session.user)
         res.json({ status: 'success', user });
     } else {  
       console.log("no")

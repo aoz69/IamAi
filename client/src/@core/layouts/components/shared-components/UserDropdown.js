@@ -1,5 +1,5 @@
 // ** React Imports
-import { useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment } from 'react';
 import { useRouter } from 'next/router'
 import Box from '@mui/material/Box'
 import Menu from '@mui/material/Menu'
@@ -17,7 +17,8 @@ import AccountOutline from 'mdi-material-ui/AccountOutline'
 const UserDropdown = () => {
   
   const [logoutSuccess, setLogoutSuccess] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user, setUser] = useState({});
   const router = useRouter()
 
   const handleDropdownOpen = event => {
@@ -41,6 +42,7 @@ const UserDropdown = () => {
       const data = await response.json();
 
       if (data.success) {
+        console.log(data)
         setLogoutSuccess(true);
         router.push('/pages/login');
 
@@ -53,11 +55,6 @@ const UserDropdown = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (logoutSuccess === true) {
-      
-  //   }
-  // }, [logoutSuccess]);
 
   const styles = {
     py: 2,
@@ -68,6 +65,26 @@ const UserDropdown = () => {
     color: 'text.primary',
     textDecoration: 'none',
   }
+
+
+  useEffect(() => {
+    fetch('http://localhost:3100/getSession', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 'success' && data.user) {
+          setUser(data.user);
+        } else {
+          router.push('pages/login');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user session:', error);
+      });
+  }, []);
+
 
   return (
     <Fragment>
@@ -100,7 +117,7 @@ const UserDropdown = () => {
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 600 }}>
-                John Doe
+                {user.name}
                 </Typography>
             </Box>
           </Box>
