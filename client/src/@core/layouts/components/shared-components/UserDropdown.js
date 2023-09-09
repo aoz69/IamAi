@@ -34,13 +34,16 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('/api/logout', {
+      const response = await fetch('http://localhost:3100/logout', {
         method: 'POST',
+        credentials: 'include'
       });
       const data = await response.json();
 
       if (data.success) {
         setLogoutSuccess(true);
+        router.push('/pages/login');
+
       } else {
         setLogoutSuccess(false);
       }
