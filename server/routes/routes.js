@@ -34,6 +34,8 @@ router.get('/fetchLowStock', fetch.fetchLowStock);
 router.get('/fetchArchived', fetch.fetchArchived);
 router.get('/fetchInStock', fetch.fetchInStock);
 router.get('/fetchSold', fetch.fetchSold);
+router.get('/fetchProductById/:productId', fetch.fetchProductById);
+
 
 
 router.get('/user', fetch.fetchUsers);
@@ -47,6 +49,8 @@ router.post('/addProduct', save.insertProducts);
 router.post('/CateModel', save.insertCategory);
 
 router.put('/updateUser/:userId', save.updateUser);
+router.put('/updateProduct/:productId', save.updateProduct);
+
 
 // Delete a product by ID
 router.delete('/delete/product/:productId', async (req, res) => {

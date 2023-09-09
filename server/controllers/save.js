@@ -92,6 +92,34 @@ exports.insertProducts = async (req,res) =>{
     }
 }
 
+exports.updateProduct = async (req, res) => {
+  const productId = req.params.productId;
+  const updateData = req.body;
+
+  try {
+    const product = await dbModel.productModel.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    product.name = updateData.name || product.name;
+    product.price = updateData.price || product.price;
+    product.barcodeId = updateData.barcodeId || product.barcodeId;
+    product.category = updateData.category || product.category;
+    product.expiry = updateData.expiry || product.expiry;
+    product.status = updateData.status || product.status;
+
+    await product.save();
+
+    res.json({ success: "Product updated successfully" });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ error: "Server error, try again" });
+  }
+};
+
+
 exports.insertCategory = async (req, res) => {
     
     try {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
@@ -44,6 +45,13 @@ const handleDeleteClick = (productId) => {
 
 
 const DashboardTable = () => {
+  const router = useRouter();
+  
+  const handleEditClick = (productId) => {
+    router.push(`/pages/editProduct/${productId}`);
+
+  };
+
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -128,7 +136,7 @@ const DashboardTable = () => {
                       />
                     </TableCell>
                     <TableCell>
-                      <IconButton>
+                      <IconButton onClick={() => handleEditClick(row._id)}>
                         <EditIcon />
                       </IconButton>
                     </TableCell>

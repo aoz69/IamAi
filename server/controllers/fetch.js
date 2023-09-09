@@ -8,9 +8,6 @@ exports.fetchUsers = async (req, res) => {
     try {
         const users = await dbModel.userModel
             .find({}, 'role password')
-        // .populate(); // You might uncomment this if it's necessary
-
-        // Assuming `users` is an array of objects with `role` and `password` fields
         res.json({ "data": users });
 
 
@@ -50,6 +47,21 @@ exports.fetchProductByCategory = async (req, res, category) => {
 };
 
 
+exports.fetchProductById = async (req, res) => {
+    const { productId } = req.params;
+  
+    try {
+      const product = await dbModel.productModel.findById(productId).exec();
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+      res.json({ product });
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  
 exports.fetchProducts = async (req, res) => {
     const products = await dbModel.productModel
         .find({})
