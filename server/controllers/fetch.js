@@ -77,6 +77,22 @@ exports.fetchCate = async (req, res) => {
 };
 
 
+exports.fetchCategoryById = async (req, res) => {
+    const { categoryId } = req.params;
+  
+    try {
+      const category = await dbModel.categoryModel.findById(categoryId).exec();
+      if (!category) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      res.json({ category });
+    } catch (error) {
+      console.error('Error fetching Category:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+
 exports.fetchBarCode = async (req, res) => {
     const product = await dbModel.productModel
         .find({}, "barcodeId")
@@ -114,7 +130,7 @@ exports.inStockCount = async (req, res) => {
     res.json({ "stock": inStock });
 };
 exports.lowstockCount = async (req, res) => {
-    const activeCount = await dbModel.productModel.countDocuments({ status: 'lowstock'});;
+    const activeCount = await dbModel.productModel.countDocuments({ status: 'lowStock'});;
     res.json({ "lowstock": activeCount });
 };
 

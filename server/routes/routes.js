@@ -35,7 +35,7 @@ router.get('/fetchArchived', fetch.fetchArchived);
 router.get('/fetchInStock', fetch.fetchInStock);
 router.get('/fetchSold', fetch.fetchSold);
 router.get('/fetchProductById/:productId', fetch.fetchProductById);
-
+router.get('/fetchCategoryById/:categoryId', fetch.fetchCategoryById);
 
 
 router.get('/user', fetch.fetchUsers);
@@ -50,6 +50,8 @@ router.post('/CateModel', save.insertCategory);
 
 router.put('/updateUser/:userId', save.updateUser);
 router.put('/updateProduct/:productId', save.updateProduct);
+router.put('/updateCategory/:categoryId', save.updateCategory);
+
 
 
 // Delete a product by ID

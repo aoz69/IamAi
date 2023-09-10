@@ -16,11 +16,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const statusObj = {
-  instock: { color: 'error' },
+  instock: { color: 'info' },
   lowstock: { color: 'warning' },
   sold: { color: 'success' },
+  archived: { color: 'error' },
 };
-
 
 const handleDeleteClick = (productId) => {
   if (window.confirm('Are you sure you want to delete this product?')) {

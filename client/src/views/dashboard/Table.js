@@ -11,9 +11,10 @@ import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 
 const statusObj = {
-  instock: { color: 'error' },
+  instock: { color: 'info' },
   lowstock: { color: 'warning' },
   sold: { color: 'success' },
+  archived: { color: 'error' },
 };
 
 const DashboardTable = () => {

@@ -1,7 +1,5 @@
 const dbModel = require('../models/dbModel');
 const hashing  = require('bcrypt');
-const session = require('express-session');
-const dbcon = require('./dbcon');
 
 exports.insertUsers = async (req, res) => {
     
@@ -24,8 +22,6 @@ exports.insertUsers = async (req, res) => {
     try {
       let saveUser = await user.save();
       let session = req.session;
-    //   session.userName = req.body.f_name + " " + req.body.l_name;
-    //   session._id = user._id;
       res.json({ success: "saved" });
       console.log("success");
       
@@ -53,12 +49,10 @@ exports.insertUsers = async (req, res) => {
       user.email = updateData.email || user.email;
       user.password = updateData.password || user.password;
 
-
       if (updateData.password) {
         const hashedPass = await hashing.genSalt(10);
         user.password = await hashing.hash(updateData.password, hashedPass);
       }
-
       await user.save();
   
       res.json({ success: "User updated successfully" });
@@ -81,14 +75,11 @@ exports.insertProducts = async (req,res) =>{
             category: req.body.category,
             date: req.body.date,
         });
-        const saveProduct = await products.save();
         res.json({success: "saved"});
-        // 
         
     } catch (error) {
         res.json({error: "error saving products to dabatase"} + error );
-        console.log("error " + error);
-        // 
+
     }
 }
 
@@ -123,12 +114,6 @@ exports.updateProduct = async (req, res) => {
 exports.insertCategory = async (req, res) => {
     
     try {
-    //   const name = req.body.name;
-  
-    //   if (!name) {
-    //     return res.status(400).json({ error: "Name field is required" });
-    //   }
-  
       const category = new dbModel.categoryModel({
         name: req.body.name,
       });
@@ -139,3 +124,26 @@ exports.insertCategory = async (req, res) => {
       res.status(500).json({ error: "Error saving category to the database", details: error });
     }
   };
+
+
+  
+exports.updateCategory = async (req, res) => {
+  const categoryId = req.params.categoryId;
+  const updateData = req.body;
+
+  try {
+    const category = await dbModel.categoryModel.findById(categoryId);
+
+    if (!category) { 
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    category.name = updateData.name || category.name;
+    await category.save();
+
+    res.json({ success: "Category updated successfully" });
+  } catch (error) {
+    console.error("Error updating Category:", error);
+    res.status(500).json({ error: "Server error, try again" });
+  }
+};

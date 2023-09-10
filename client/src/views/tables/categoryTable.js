@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
@@ -11,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 
 
 const handleDeleteClick = (categoryId) => {
@@ -33,12 +35,19 @@ const handleDeleteClick = (categoryId) => {
       });
   }
 };
+  
+
 
 const CategoryTable = () => {
   const [categories, setCategories] = useState([]);
+  const router = useRouter();
+
+
+  const handleEditClick = (categoryId) => {
+    router.push(`/pages/editCategory/${categoryId}`);
+  };
 
   useEffect(() => {
-    // Fetch categories data
     fetch('http://localhost:3100/fetchCate')
       .then((response) => response.json())
       .then((data) => {
@@ -76,7 +85,7 @@ const CategoryTable = () => {
                   </Box>
                 </TableCell>
                 <TableCell>
-                  <IconButton>
+                  <IconButton onClick={() => handleEditClick(category._id)}>
                     <EditIcon />
                   </IconButton>
                 </TableCell>
