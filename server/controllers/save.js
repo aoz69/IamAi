@@ -65,6 +65,11 @@ exports.insertUsers = async (req, res) => {
 
 exports.insertProducts = async (req,res) =>{
 
+  datee = new Date(req.body.date)
+  console.log(req.body.date)
+  console.log("date: "+ datee)
+
+
     try {
         const products = new dbModel.productModel({
             name: req.body.name,
@@ -73,12 +78,15 @@ exports.insertProducts = async (req,res) =>{
             barcodeId: req.body.barcodeId,
             status: req.body.status,
             category: req.body.category,
-            date: req.body.date,
+            date: datee,
         });
+        await products.save();
         res.json({success: "saved"});
         
     } catch (error) {
         res.json({error: "error saving products to dabatase"} + error );
+  console.log(error)
+
 
     }
 }

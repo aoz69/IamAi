@@ -48,14 +48,14 @@ const productModel = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["instock", "lowStock", "sold" ,"archived" ],
-        default: "active",
+        default: "instock",
     }, 
     category:{
         type: Schema.Types.ObjectId,
         ref: "category"
     },
-    dateOfExpiry:{
-        type: String,
+    date:{
+        type: Date,
     }
 });
 

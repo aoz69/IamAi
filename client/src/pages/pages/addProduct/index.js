@@ -20,17 +20,16 @@ const AddProductForm = () => {
     barcodeId: '',
     status: 'instock',
     category: '',
-    date: null,
+    date: '',
   });
+
   const [categories, setCategories] = useState([]);
   const [alert, setAlert] = useState({ type: '', message: '' });
 
   useEffect(() => {
-    // Fetch categories from your API
     fetch('http://localhost:3100/fetchCate')
       .then((response) => response.json())
       .then((data) => {
-        // Assuming your API response is in the format you provided
         setCategories(data.category);
       })
       .catch((error) => {
@@ -54,14 +53,14 @@ const AddProductForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify({ ...product}),
       });
 
       if (response.ok) {
         setAlert({ type: 'success', message: 'Product added successfully' });
         setTimeout(() => {
           setAlert({ type: '', message: '' });
-          router.push('/productTable'); // Redirect to product table page
+          router.push('/productTable'); 
         }, 2000);
       } else {
         setAlert({ type: 'error', message: 'Failed to add product' });

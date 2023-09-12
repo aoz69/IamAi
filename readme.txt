@@ -26,13 +26,15 @@ pie chart
 delete
 Session
 edit product
+edit category
+date saved
 ########################################### completed: ###########################################
 
 
 
 
 ########################################### need to do: ###########################################
-edit category
+date exceed bhayo bhane auto archive banaue status lai
 qr generation
 Notification
 ########################################### need to do: ###########################################

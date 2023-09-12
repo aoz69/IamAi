@@ -53,8 +53,6 @@ router.put('/updateProduct/:productId', save.updateProduct);
 router.put('/updateCategory/:categoryId', save.updateCategory);
 
 
-
-// Delete a product by ID
 router.delete('/delete/product/:productId', async (req, res) => {
     try {
       const { productId } = req.params;
@@ -65,7 +63,6 @@ router.delete('/delete/product/:productId', async (req, res) => {
     }
   });
   
-  // Delete a category by ID
   router.delete('/delete/category/:categoryId', async (req, res) => {
     try {
       const { categoryId } = req.params;
@@ -77,7 +74,7 @@ router.delete('/delete/product/:productId', async (req, res) => {
     }
   });
   
-  // Delete a user by ID
+  
   router.delete('/delete/user/:userId', async (req, res) => {
     try {
       const { userId } = req.params;
