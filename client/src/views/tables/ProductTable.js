@@ -14,6 +14,7 @@ import TablePagination from '@mui/material/TablePagination';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import dateConvert from 'src/@core/layouts/components/date/index'
 
 const statusObj = {
   instock: { color: 'info' },
@@ -46,7 +47,6 @@ const handleDeleteClick = (productId) => {
 
 const DashboardTable = () => {
   const router = useRouter();
-  
   const handleEditClick = (productId) => {
     router.push(`/pages/editProduct/${productId}`);
 
@@ -96,8 +96,8 @@ const DashboardTable = () => {
 
   return (
     <Card>
-       <div style={{ maxHeight: '400px', overflow: 'auto' }}>
-       <TableContainer sx={{ minWidth: 800 }}>
+      <div style={{ maxHeight: '400px', overflow: 'auto' }}>
+        <TableContainer sx={{ minWidth: 800 }}>
           <Table aria-label='table in dashboard'>
             <TableHead>
               <TableRow>
@@ -124,14 +124,15 @@ const DashboardTable = () => {
                     <TableCell>{row.price}</TableCell>
                     <TableCell>{row.barcodeId}</TableCell>
                     <TableCell>{row.category}</TableCell>
-                    <TableCell>{row.expiry}</TableCell>
+                    {/* <TableCell>{dateConvert(row.date)}</TableCell> */}
+                    <TableCell>{row.date}</TableCell>
                     <TableCell>
                       <Chip
                         label={row.status}
                         color={statusObj[row.status]?.color || 'default'}
                         sx={{
                           height: 24,
-                          textTransform: 'capitalize',
+                          textTransform: 'capitalize',  
                         }}
                       />
                     </TableCell>
@@ -141,9 +142,9 @@ const DashboardTable = () => {
                       </IconButton>
                     </TableCell>
                     <TableCell>
-                    <IconButton onClick={() => handleDeleteClick(row._id)}>
-                      <DeleteForeverIcon />
-                    </IconButton>
+                      <IconButton onClick={() => handleDeleteClick(row._id)}>
+                        <DeleteForeverIcon />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}

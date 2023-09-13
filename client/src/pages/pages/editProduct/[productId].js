@@ -25,7 +25,7 @@ const EditProductForm = () => {
     barcodeId: '',
     status: 'instock',
     category: '',
-    date: null,
+    date: '',
   });
   const [categories, setCategories] = useState([]);
   const [alert, setAlert] = useState({ type: '', message: '' });

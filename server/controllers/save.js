@@ -106,7 +106,7 @@ exports.updateProduct = async (req, res) => {
     product.price = updateData.price || product.price;
     product.barcodeId = updateData.barcodeId || product.barcodeId;
     product.category = updateData.category || product.category;
-    product.expiry = updateData.expiry || product.expiry;
+    product.date = updateData.date || product.date;
     product.status = updateData.status || product.status;
 
     await product.save();

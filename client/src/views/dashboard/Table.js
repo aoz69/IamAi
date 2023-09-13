@@ -90,7 +90,7 @@ const DashboardTable = () => {
                 <TableCell>{row.price}</TableCell>
                 <TableCell>{row.barcodeId}</TableCell>
                 <TableCell>{row.category}</TableCell>
-                <TableCell>{row.expiry}</TableCell>
+                <TableCell>{row.date}</TableCell>
                 <TableCell>
                   <Chip
                     label={row.status}
