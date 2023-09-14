@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require("express");
 const session = require('express-session');
 const app = express();
@@ -11,6 +10,7 @@ const sessionSecret = process.env.SESSION_SECRET || 'default_secret';
 const port = process.env.PORT || 3100;
 const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
 const helmet = require('helmet');
+const cron = require('./controllers/dateReader');
 
 
 app.use(express.json()); //this is the build in express body-parser
@@ -31,6 +31,7 @@ app.use(
       maxAge: 30 * 24 * 60 * 60 * 1000
     }
   }));
+  cron.scheduledTask();
   
   app.use(cookieParser());
   app.use(helmet());

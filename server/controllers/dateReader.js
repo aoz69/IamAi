@@ -1,26 +1,30 @@
 const cron = require('node-cron');
-const Product = require('../models/dbModel'); // Replace with your actual import path
+const dbModel = require('../models/dbModel');
 
-// Schedule the task to run every day at a specific time (adjust as needed)
-cron.schedule('0 0 * * *', async () => {
-  const thresholdDate = new Date(); // Current date
-  thresholdDate.setDate(thresholdDate.getDate() - 7); // Example: Archive products older than 7 days
 
-  try {
-    // Find products with a date exceeding the threshold
-    const productsToArchive = await Product.find({
-      date: { $lt: thresholdDate },
-      status: { $ne: 'archived' }, // Avoid archiving the same product multiple times
-    });
+const scheduledTask = async () => {
+    console.log('Scheduled task running...');
+    const thresholdDate = new Date(); // Current date
+    console.log(thresholdDate);
 
-    // Update the status to "archived" for the products
-    for (const product of productsToArchive) {
-      product.status = 'archived';
-      await product.save();
+    thresholdDate.setDate(thresholdDate.getDate() - 7); // Example: Archive products older than 7 days
+  
+    try {
+      const productsToArchive = await dbModel.productModel.find({
+        date: { $lt: thresholdDate },
+      });
+
+      for (const product of productsToArchive) {
+        console.log('Products to archive:', productsToArchive);
+        product.status = "archived";
+        await product.save();
+      } 
+    } catch (error) {
+      console.log('ERROR'); 
+      console.error('Error archiving products:', error);
     }
-
-    console.log(`${productsToArchive.length} products archived.`);
-  } catch (error) {
-    console.error('Error archiving products:', error);
-  }
-});
+  };
+  
+  cron.schedule('* * * * *', scheduledTask);
+  
+  module.exports = { scheduledTask };

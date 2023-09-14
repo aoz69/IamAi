@@ -28,13 +28,13 @@ Session
 edit product
 edit category
 date saved
+date exceed bhayo bhane auto archive banaue status lai
 ########################################### completed: ###########################################
 
 
 
 
 ########################################### need to do: ###########################################
-date exceed bhayo bhane auto archive banaue status lai
 qr generation
 Notification
 ########################################### need to do: ###########################################
