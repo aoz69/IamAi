@@ -67,7 +67,24 @@ const categoryModel = new mongoose.Schema({
     }
 });
 
+const notificationModel = new mongoose.Schema({
+    data:{
+        type: String,
+        required: true,
+    },
+    user:{
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    },
+    date:{
+        type: Date,
+        // required: true,
+    }
+});
+
 
 module.exports.userModel = mongoose.model('User' , userModel);
 module.exports.productModel = mongoose.model('Products' , productModel);
 module.exports.categoryModel = mongoose.model('Categories' , categoryModel);
+module.exports.notificationModel = mongoose.model('Notifications' , notificationModel);
+

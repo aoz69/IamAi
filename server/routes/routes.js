@@ -6,7 +6,7 @@ const save = require("../controllers/save");
 const dbcon = require("../controllers/dbcon");
 const fetch = require("../controllers/fetch");
 const del = require('../controllers/delete');
-const { userModel, productModel, categoryModel } = require('../models/dbModel');
+const { userModel, productModel, categoryModel, notificationModel } = require('../models/dbModel');
 
 
 
@@ -39,11 +39,13 @@ router.get('/fetchCategoryById/:categoryId', fetch.fetchCategoryById);
 
 
 router.get('/user', fetch.fetchUsers);
+router.get('/fetchNotifi', fetch.fetchNotifi);
 router.get('/getSession' , index.getSession)
 router.post('/logout', index.logout);
 
 // POST REQUESTS
 router.post('/addUser', save.insertUsers);
+router.post('/addNotfi', save.insertNotfication);
 router.post('/checkUser' , index.checkUser);
 router.post('/addProduct', save.insertProducts);
 router.post('/CateModel', save.insertCategory);

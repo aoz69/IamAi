@@ -65,6 +65,34 @@ exports.insertUsers = async (req, res) => {
 
 exports.insertProducts = async (req,res) =>{
 
+  let datee = new Date(req.body.date)
+  console.log(req.body.date)
+  console.log("date: "+ datee)
+
+    try {
+        const products = new dbModel.productModel({
+            name: req.body.name,
+            price: req.body.price,
+            stock_Count: req.body.stock_Count,
+            barcodeId: req.body.barcodeId,
+            status: req.body.status,
+            category: req.body.category,
+            date: datee,
+        });
+        await products.save();
+        res.json({success: "saved"});
+        
+    } catch (error) {
+        res.json({error: "error saving products to dabatase"} + error );
+  console.log(error)
+
+
+    }
+}
+
+
+exports.insertProducts = async (req,res) =>{
+
   datee = new Date(req.body.date)
   console.log(req.body.date)
   console.log("date: "+ datee)
@@ -85,9 +113,7 @@ exports.insertProducts = async (req,res) =>{
         
     } catch (error) {
         res.json({error: "error saving products to dabatase"} + error );
-  console.log(error)
-
-
+        console.log(error)   
     }
 }
 
@@ -153,5 +179,23 @@ exports.updateCategory = async (req, res) => {
   } catch (error) {
     console.error("Error updating Category:", error);
     res.status(500).json({ error: "Server error, try again" });
+  }
+};
+
+
+exports.insertNotfication = async (req, res) => {
+  // let datee = new Date(req.body.date)
+    
+  try {
+    const notifi = new dbModel.notificationModel({
+      data: req.body.data,
+      user: req.body.user,
+      // date: datee,
+    });
+
+    const saveNotifi = await notifi.save();
+    res.json({ success: "Notification saved successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error saving notification to the database", details: error });
   }
 };

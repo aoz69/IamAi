@@ -17,6 +17,21 @@ exports.fetchUsers = async (req, res) => {
     }
 };
 
+exports.fetchNotifi = async (req, res) => {
+    try {
+        const data = await dbModel.notificationModel
+            .find({})
+        res.json({ "notifi": data });
+
+
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        res.status(500).json({ error: "An error occurred while fetching data." });
+    }
+};
+
+
+
 //only gets name and id of user
 exports.fetchUsersName = async (req, res) => {
     // dbcon.connect();

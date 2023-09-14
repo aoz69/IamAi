@@ -14,7 +14,7 @@ const TabAccount = () => {
     name: '',
     email: '',
     role: '',
-    newPassword: '',
+    password: '',
   });
   const [updateStatus, setUpdateStatus] = useState(null);
 
@@ -32,7 +32,7 @@ const TabAccount = () => {
             name: data.user.name,
             email: data.user.email,
             role: data.user.role,
-            newPassword: '', // Clear newPassword field
+            password: '', 
           });
         } else {
           router.push('pages/login');
@@ -57,7 +57,7 @@ const TabAccount = () => {
         name: formData.name,
         email: formData.email,
         role: formData.role,
-        newPassword: formData.newPassword,
+        password: formData.password,
       };
 
       // Make the API request with the user's ID included in the body
@@ -128,8 +128,8 @@ const TabAccount = () => {
               fullWidth
               label="New Password"
               type="password"
-              name="newPassword"
-              value={formData.newPassword}
+              name="password"
+              value={formData.password}
               onChange={handleFormChange}
             />
           </Grid>

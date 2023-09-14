@@ -17,7 +17,7 @@ code {
 }
 code:not([class*='language-']):before,
 code:not([class*='language-']):after {
-  content: '`';
+  content: '`';   
 }
 code[class*='language-'] {
   padding: 0;
