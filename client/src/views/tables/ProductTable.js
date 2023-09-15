@@ -14,6 +14,7 @@ import TablePagination from '@mui/material/TablePagination';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import QRCode from 'qrcode.react';
 import dateConvert from 'src/@core/layouts/components/date/index'
 
 const statusObj = {
@@ -101,9 +102,9 @@ const DashboardTable = () => {
           <Table aria-label='table in dashboard'>
             <TableHead>
               <TableRow>
+                <TableCell>Barcode</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Price</TableCell>
-                <TableCell>BarcodeId</TableCell>
                 <TableCell>Category</TableCell>
                 <TableCell>Expiry</TableCell>
                 <TableCell>Status</TableCell>
@@ -117,6 +118,11 @@ const DashboardTable = () => {
                 .map((row, index) => (
                   <TableRow hover key={index}>
                     <TableCell>
+                    <TableCell>
+                    <QRCode value={row.price} style={{ width: '100px', height: '100px' }} />
+              </TableCell>
+                    </TableCell>
+                    <TableCell>
                       <Box>
                         <Typography>{row.name}</Typography>
                       </Box>
@@ -124,7 +130,6 @@ const DashboardTable = () => {
                     <TableCell>{row.price}</TableCell>
                     <TableCell>{row.barcodeId}</TableCell>
                     <TableCell>{row.category}</TableCell>
-                    {/* <TableCell>{dateConvert(row.date)}</TableCell> */}
                     <TableCell>{row.date}</TableCell>
                     <TableCell>
                       <Chip
