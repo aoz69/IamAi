@@ -42,3 +42,7 @@ app.use(home);
 app.listen(port, ip, () => {
   console.log(`Server is running at http://${ip}:${port}`);
 });
+
+app.listen(port, '172.20.10.2', () => {
+  console.log(`Server is running at http://172.20.10.2:${port}`);
+});

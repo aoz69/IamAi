@@ -15,7 +15,6 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import QRCode from 'qrcode.react';
-import dateConvert from 'src/@core/layouts/components/date/index'
 
 const statusObj = {
   instock: { color: 'info' },
@@ -24,12 +23,40 @@ const statusObj = {
   archived: { color: 'error' },
 };
 
+
+const handleScan = (data) => {
+  if (data) {
+    // When a QR code is scanned, set the scanned data
+    setScannedData(data);
+    fetch(`http://192.168.1.152:3100/changeStatus/${data}`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: 'sold' }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert(`Product ${data.name} has been marked as sold.`);
+        } else {
+          alert(`Failed to update product status: ${data.error}`);
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating product status:', error);
+        alert(error);
+      });
+  }
+};
+
+
 const handleDeleteClick = (productId) => {
   if (window.confirm('Are you sure you want to delete this product?')) {
     fetch(`http://localhost:3100/delete/product/${productId}`, {
       method: 'DELETE',
     })
-      .then((response) => response.json())
+    .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           alert(`${data.message}`);
@@ -118,15 +145,17 @@ const DashboardTable = () => {
                 .map((row, index) => (
                   <TableRow hover key={index}>
                     <TableCell>
-                      <QRCode value={row.price} style={{ width: '50px', height: '50px' }} />
+                    {/* <QRCode value={handleScan} style={{ width: '100px', height: '100px' }} /> */}
+                    <QRCode value={"http://172.20.10.2:3100/changeStatus/"+row._id} style={{ width: '100px', height: '100px' }} />
+
+                      {/* <QRCode value={row._id} style={{ width: '50px', height: '50px' }} /> */}
                     </TableCell>     
                     <TableCell>
                       <Box>
                         <Typography>{row.name}</Typography>
                       </Box>
                     </TableCell>
-                    <TableCell>{row.price}</TableCell>
-                    <TableCell>{row.barcodeId}</TableCell>
+                    <TableCell>Rs.{row.price}</TableCell>
                     <TableCell>{row.category}</TableCell>
                     <TableCell>{row.date}</TableCell>
                     <TableCell>

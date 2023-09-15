@@ -12,11 +12,12 @@ edit category
 date saved
 date exceed bhayo bhane auto archive banaue status lai
 Notification
+qr generation
 ########################################### completed: ###########################################
 
 
 
 
 ########################################### need to do: ###########################################
-qr generation
+forcasting
 ########################################### need to do: ###########################################

@@ -1,7 +1,6 @@
 // ** React Imports
 import { createContext, useState } from 'react'
 
-// ** ThemeConfig Import
 import themeConfig from 'src/configs/themeConfig'
 
 const initialSettings = {

@@ -6,9 +6,8 @@ const save = require("../controllers/save");
 const dbcon = require("../controllers/dbcon");
 const fetch = require("../controllers/fetch");
 const del = require('../controllers/delete');
+const status = require('../controllers/qrScan')
 const { userModel, productModel, categoryModel, notificationModel } = require('../models/dbModel');
-
-
 
 
 router.get("/", index.index);
@@ -37,7 +36,6 @@ router.get('/fetchSold', fetch.fetchSold);
 router.get('/fetchProductById/:productId', fetch.fetchProductById);
 router.get('/fetchCategoryById/:categoryId', fetch.fetchCategoryById);
 
-
 router.get('/user', fetch.fetchUsers);
 router.get('/fetchNotifi', fetch.fetchNotifi);
 router.get('/getSession' , index.getSession)
@@ -53,6 +51,7 @@ router.post('/CateModel', save.insertCategory);
 router.put('/updateUser/:userId', save.updateUser);
 router.put('/updateProduct/:productId', save.updateProduct);
 router.put('/updateCategory/:categoryId', save.updateCategory);
+router.put('/changeStatus/:productId',status.changeStatus);
 
 
 router.delete('/delete/product/:productId', async (req, res) => {
@@ -75,7 +74,6 @@ router.delete('/delete/product/:productId', async (req, res) => {
       res.status(500).json({ success: false, error: error.message });
     }
   });
-  
   
   router.delete('/delete/user/:userId', async (req, res) => {
     try {
