@@ -73,6 +73,21 @@ const EditProductForm = () => {
   
       if (response.ok) {
         setAlert({ type: 'success', message: 'Product updated successfully' });
+  
+        const notificationResponse = await fetch('http://localhost:3100/addNotfi', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            data: `Product with ID ${productId} updated successfully`,
+          }),
+        });
+  
+        if (!notificationResponse.ok) {
+          console.error('Failed to add notification:', notificationResponse.statusText);
+        }
+  
         setTimeout(() => {
           setAlert({ type: '', message: '' });
           router.push('/productTable'); 

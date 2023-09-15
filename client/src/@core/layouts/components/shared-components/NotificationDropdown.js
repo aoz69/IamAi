@@ -1,19 +1,15 @@
-// ** React Imports
-import { useState, Fragment } from 'react'
+import { useEffect, useState, Fragment } from 'react';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import MuiMenu from '@mui/material/Menu';
+import MuiAvatar from '@mui/material/Avatar';
+import MuiMenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
+import BellOutline from 'mdi-material-ui/BellOutline';
+import PerfectScrollbarComponent from 'react-perfect-scrollbar';
 
-import Box from '@mui/material/Box'
-import IconButton from '@mui/material/IconButton'
-import { styled } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import MuiMenu from '@mui/material/Menu'
-import MuiAvatar from '@mui/material/Avatar'
-import MuiMenuItem from '@mui/material/MenuItem'
-import Typography from '@mui/material/Typography'
-import BellOutline from 'mdi-material-ui/BellOutline'
-
-import PerfectScrollbarComponent from 'react-perfect-scrollbar'
-
-// ** Styled Menu component
 const Menu = styled(MuiMenu)(({ theme }) => ({
   '& .MuiMenu-paper': {
     width: 380,
@@ -28,7 +24,29 @@ const Menu = styled(MuiMenu)(({ theme }) => ({
   }
 }))
 
-// ** Styled MenuItem component
+const fetchNotifications = async () => {
+  try {
+    const response = await axios.get('http://localhost:3100/fetchNotifi');
+    return response.data.notifi; 
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    return [];
+  }
+};
+const fetchUserName = async (userId) => {
+  try {
+    const response = await fetch(`http://localhost:3100/user/${userId}`); // Replace with your actual API endpoint for fetching user names
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const userData = await response.json();
+    return userData.name; // Assuming 'name' is the property that contains the user's name
+  } catch (error) {
+    console.error('Error fetching user name:', error);
+    return null;
+  }
+};
+
 const MenuItem = styled(MuiMenuItem)(({ theme }) => ({
   paddingTop: theme.spacing(3),
   paddingBottom: theme.spacing(3),
@@ -46,14 +64,12 @@ const PerfectScrollbar = styled(PerfectScrollbarComponent)({
   ...styles
 })
 
-// ** Styled Avatar component
 const Avatar = styled(MuiAvatar)({
   width: '2.375rem',
   height: '2.375rem',
   fontSize: '1.125rem'
 })
 
-// ** Styled component for the title in MenuItems
 const MenuItemTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   flex: '1 1 100%',
@@ -64,7 +80,6 @@ const MenuItemTitle = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(0.75)
 }))
 
-// ** Styled component for the subtitle in MenuItems
 const MenuItemSubtitle = styled(Typography)({
   flex: '1 1 100%',
   overflow: 'hidden',
@@ -72,19 +87,38 @@ const MenuItemSubtitle = styled(Typography)({
   textOverflow: 'ellipsis'
 })
 
-const NotificationDropdown = () => {
-  // ** States
-  const [anchorEl, setAnchorEl] = useState(null)
 
-  // ** Hook
-  const hidden = useMediaQuery(theme => theme.breakpoints.down('lg'))
+
+
+const NotificationDropdown = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const hidden = useMediaQuery(theme => theme.breakpoints.down('lg'));
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+
+    const fetchNotificationsData = async () => {
+      try {
+        const response = await fetch('http://localhost:3100/fetchNotifi');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const notificationsData = await response.json();
+        setNotifications(notificationsData.notifi);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchNotificationsData();
+  }, []);
 
   const handleDropdownOpen = event => {
-    setAnchorEl(event.currentTarget)
+    setAnchorEl(event.currentTarget);
   }
 
   const handleDropdownClose = () => {
-    setAnchorEl(null)
+    setAnchorEl(null);
   }
 
   const ScrollWrapper = ({ children }) => {
@@ -112,19 +146,19 @@ const NotificationDropdown = () => {
         <MenuItem disableRipple>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <Typography sx={{ fontWeight: 600 }}>Notifications</Typography>
-           
           </Box>
         </MenuItem>
         <ScrollWrapper>
-          <MenuItem>
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center',  height: '100%'  }}>
-              <Avatar alt='Flora' src='/images/avatars/4.png' />
-              <Box sx={{ mx: 4, flex: '1 1', display: 'flex', flexDirection: 'column', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                <MenuItemTitle>USER NAME </MenuItemTitle>
-                <MenuItemSubtitle variant='body2'> ACTUAL NOTIFICATIO ACTUAL NOTIFICATIO ACTUAL NOTIFICATIO ACTUAL NOTIFICATIO ACTUAL NOTIFICATIO</MenuItemSubtitle>
+          {notifications.map(notification => (
+            <MenuItem key={notification._id}>
+              <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', height: '100%' }}>
+                <Avatar alt={notification.user} src={notification.userAvatar} />
+                <Box sx={{ mx: 4, flex: '1 1', display: 'flex', flexDirection: 'column', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <MenuItemSubtitle variant='body2'>{notification.data}</MenuItemSubtitle>
+                </Box>
               </Box>
-            </Box>
-          </MenuItem>
+            </MenuItem>
+          ))}
         </ScrollWrapper>
         <MenuItem
           disableRipple
@@ -133,7 +167,7 @@ const NotificationDropdown = () => {
         </MenuItem>
       </Menu>
     </Fragment>
-  )
+  );
 }
 
-export default NotificationDropdown
+export default NotificationDropdown;

@@ -31,7 +31,6 @@ const EditProductForm = () => {
     const { name, value } = e.target;
     setCategory({ ...category, [name]: value }); // Fixed: Changed setProduct to setCategory
   };
-
   const handleUpdateCategory = async () => {
     try {
       const response = await fetch(`http://localhost:3100/updateCategory/${categoryId}`, {
@@ -44,6 +43,23 @@ const EditProductForm = () => {
 
       if (response.ok) {
         setAlert({ type: 'success', message: 'Category updated successfully' });
+        
+        // Add a notification for category update
+        const notificationResponse = await fetch('http://localhost:3100/addNotfi', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            data: `Category with ID ${categoryId} updated successfully`,
+            // Add any additional data you need for the notification
+          }),
+        });
+
+        if (!notificationResponse.ok) {
+          console.error('Failed to add notification:', notificationResponse.statusText);
+        }
+
         setTimeout(() => {
           setAlert({ type: '', message: '' });
           router.push('/cateTables');
