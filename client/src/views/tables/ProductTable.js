@@ -118,10 +118,8 @@ const DashboardTable = () => {
                 .map((row, index) => (
                   <TableRow hover key={index}>
                     <TableCell>
-                    <TableCell>
-                    <QRCode value={row.price} style={{ width: '100px', height: '100px' }} />
-              </TableCell>
-                    </TableCell>
+                      <QRCode value={row.price} style={{ width: '50px', height: '50px' }} />
+                    </TableCell>     
                     <TableCell>
                       <Box>
                         <Typography>{row.name}</Typography>
