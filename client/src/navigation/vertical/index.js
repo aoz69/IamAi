@@ -34,10 +34,6 @@ const navigation = () => {
       title: 'Category Tables',
       path: '/cateTables'
     },
-    {
-      title: 'Form Layouts',
-      path: '/form-layouts'
-    }
   ]
 }
 
