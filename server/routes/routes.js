@@ -51,8 +51,34 @@ router.post('/CateModel', save.insertCategory);
 router.put('/updateUser/:userId', save.updateUser);
 router.put('/updateProduct/:productId', save.updateProduct);
 router.put('/updateCategory/:categoryId', save.updateCategory);
-router.put('/changeStatus/:productId',status.changeStatus);
+// router.put('/changeStatus/:productId',status.changeStatus);
 
+
+
+
+// Change product status to "sale"
+router.put('/changeStatus/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updatedStatus = 'sold';
+
+    // Find the product by ID and update its status
+    const updatedProduct = await productModel.findByIdAndUpdate(
+      productId,
+      { status: sale },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    return res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 router.delete('/delete/product/:productId', async (req, res) => {
     try {

@@ -28,6 +28,7 @@ const handleScan = (data) => {
   if (data) {
     // When a QR code is scanned, set the scanned data
     setScannedData(data);
+    console.log("This is handel scan")
     fetch(`http://192.168.1.152:3100/changeStatus/${data}`, {
       method: 'PUT', 
       headers: {
@@ -146,9 +147,7 @@ const DashboardTable = () => {
                   <TableRow hover key={index}>
                     <TableCell>
                     {/* <QRCode value={handleScan} style={{ width: '100px', height: '100px' }} /> */}
-                    <QRCode value={"http://172.20.10.2:3100/changeStatus/"+row._id} style={{ width: '100px', height: '100px' }} />
-
-                      {/* <QRCode value={row._id} style={{ width: '50px', height: '50px' }} /> */}
+                    <QRCode value={"https://192.168.43.114:3100/changeStatus/"+row._id} style={{ width: '100px', height: '100px' }} />
                     </TableCell>     
                     <TableCell>
                       <Box>
