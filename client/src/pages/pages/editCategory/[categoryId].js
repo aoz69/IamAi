@@ -51,8 +51,7 @@ const EditProductForm = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            data: `Category with ID ${categoryId} updated successfully`,
-            // Add any additional data you need for the notification
+            data: `Category: ${category.name} was recently updated`,
           }),
         });
 

@@ -9,14 +9,13 @@ const initialSettings = {
   contentWidth: themeConfig.contentWidth
 }
 
-// ** Create Context
+
 export const SettingsContext = createContext({
   saveSettings: () => null,
   settings: initialSettings
 })
 
 export const SettingsProvider = ({ children }) => {
-  // ** State
   const [settings, setSettings] = useState({ ...initialSettings })
 
   const saveSettings = updatedSettings => {

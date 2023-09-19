@@ -84,6 +84,16 @@ const DashboardTable = () => {
         });
     }
   };
+
+    const formattedDate = (date)=> {
+
+    let dateToFormat =  new Date(date);
+    const year = dateToFormat.getFullYear().toString().slice();
+    const month = String(dateToFormat.getMonth() + 1).padStart(2, "0");
+    const day = String(dateToFormat.getDate()).padStart(2, "0");
+    const finalDate = year + "/" + month + "/" + day
+    return finalDate
+  }
   
 
   return (
@@ -116,7 +126,7 @@ const DashboardTable = () => {
                   <TableCell>{row.price}</TableCell>
                   <TableCell>{row.stock_Count}</TableCell>
                   <TableCell>{row.category}</TableCell>
-                  <TableCell>{row.date}</TableCell>
+                  <TableCell>{formattedDate(row.date)}</TableCell>
                   <TableCell>
                     <Chip
                       label={row.status}
