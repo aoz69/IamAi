@@ -74,7 +74,6 @@ exports.insertProducts = async (req,res) =>{
             name: req.body.name,
             price: req.body.price,
             stock_Count: req.body.stock_Count,
-            barcodeId: req.body.barcodeId,
             status: req.body.status,
             category: req.body.category,
             date: datee,
@@ -90,32 +89,34 @@ exports.insertProducts = async (req,res) =>{
     }
 }
 
+exports.insertProducts = async (req, res) => {
+  const datee = new Date(req.body.date);
 
-exports.insertProducts = async (req,res) =>{
+  try {
+    const existingProduct = await dbModel.productModel.findOne({ name: req.body.name });
 
-  datee = new Date(req.body.date)
-  console.log(req.body.date)
-  console.log("date: "+ datee)
-
-
-    try {
-        const products = new dbModel.productModel({
-            name: req.body.name,
-            price: req.body.price,
-            stock_Count: req.body.stock_Count,
-            barcodeId: req.body.barcodeId,
-            status: req.body.status,
-            category: req.body.category,
-            date: datee,
-        });
-        await products.save();
-        res.json({success: "saved"});
-        
-    } catch (error) {
-        res.json({error: "error saving products to dabatase"} + error );
-        console.log(error)   
+    if (existingProduct) {
+      return res.status(400).json({ error: "Product with this name already exists" });
     }
-}
+
+    const product = new dbModel.productModel({
+      name: req.body.name,
+      price: req.body.price,
+      stock_Count: req.body.stock_Count,
+      status: req.body.status,
+      category: req.body.category,
+      date: datee,
+    });
+
+    await product.save();
+    res.json({ success: "Product saved successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error saving product to the database", details: error });
+  }
+};
+
+
+
 
 exports.updateProduct = async (req, res) => {
   const productId = req.params.productId;
@@ -130,7 +131,6 @@ exports.updateProduct = async (req, res) => {
 
     product.name = updateData.name || product.name;
     product.price = updateData.price || product.price;
-    product.barcodeId = updateData.barcodeId || product.barcodeId;
     product.category = updateData.category || product.category;
     product.date = updateData.date || product.date;
     product.status = updateData.status || product.status;
@@ -146,18 +146,23 @@ exports.updateProduct = async (req, res) => {
 
 
 exports.insertCategory = async (req, res) => {
-    
-    try {
-      const category = new dbModel.categoryModel({
-        name: req.body.name,
-      });
-  
-      const saveCategory = await category.save();
-      res.json({ success: "Category saved successfully" });
-    } catch (error) {
-      res.status(500).json({ error: "Error saving category to the database", details: error });
+  try {
+    const existingCategory = await dbModel.categoryModel.findOne({ name: req.body.name });
+
+    if (existingCategory) {
+      return res.status(400).json({ error: "Category with this name already exists" });
     }
-  };
+    const category = new dbModel.categoryModel({
+      name: req.body.name,
+    });
+
+    const saveCategory = await category.save();
+    res.json({ success: "Category saved successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error saving category to the database", details: error });
+  }
+};
+
 
 
   

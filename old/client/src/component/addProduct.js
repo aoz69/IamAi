@@ -9,7 +9,6 @@ const AddProduct = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [stockCount, setStockCount] = useState('');
-  const [barcodeId, setBarcodeId] = useState('');
   const [status, setStatus] = useState('');
   const [category, setCategory] = useState('');
   const [date, setDate] = useState(new Date());
@@ -27,7 +26,7 @@ const AddProduct = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, price, stockCount, barcodeId, status, category, date: formattedDate }),
+        body: JSON.stringify({ name, price, stockCount, status, category, date: formattedDate }),
       });
 
       if (response.ok) {
@@ -89,12 +88,6 @@ const AddProduct = () => {
           onChangeText={(text) => setStockCount(text)}
           value={stockCount}
           keyboardType="numeric"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="BarCode"
-          onChangeText={(text) => setBarcodeId(text)}
-          value={barcodeId}
         />
 
         <Text style={styles.label}>Set Status:</Text>

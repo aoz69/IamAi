@@ -13,6 +13,8 @@ date saved
 date exceed bhayo bhane auto archive banaue status lai
 Notification
 qr generation
+multiple entries of same product or category should not be possible
+(if same product is aadded just take the number of stock count and add to the exisiting product)
 ########################################### completed: ###########################################
 
 
@@ -22,11 +24,10 @@ qr generation
 forcasting
 chat
 can remove number of products not just products
-multiple entries of same product or category should not be possible
-(if same product is aadded just take the number of stock count and add to the exisiting product)
 
 
 NOTIFICATION BUG FIXING - also add things to notifi when operating CRUD method
 admin panel different staff different
 manage users
+Date needs to be formatted in front end
 ########################################### need to do: ###########################################

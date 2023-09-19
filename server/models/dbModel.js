@@ -38,12 +38,6 @@ const productModel = new mongoose.Schema({
     stock_Count:{
         type:Number
     },
-    barcodeId:{
-        type:String,
-
-        // type: Schema.Types.ObjectId,
-        // ref: "barcode",
-      },
     status:{
         type: String,
         required: true,

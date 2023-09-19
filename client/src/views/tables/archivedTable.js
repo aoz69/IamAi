@@ -94,7 +94,7 @@ const DashboardTable = () => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Price</TableCell>
-              <TableCell>BarcodeId</TableCell>
+              <TableCell>stock_Count</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Expiry</TableCell>
               <TableCell>Status</TableCell>
@@ -113,7 +113,7 @@ const DashboardTable = () => {
                     </Box>
                   </TableCell>
                   <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.barcodeId}</TableCell>
+                  <TableCell>{row.stock_Count}</TableCell>
                   <TableCell>{row.category}</TableCell>
                   <TableCell>{row.date}</TableCell>
                   <TableCell>

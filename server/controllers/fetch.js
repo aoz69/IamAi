@@ -108,14 +108,6 @@ exports.fetchCategoryById = async (req, res) => {
   };
 
 
-exports.fetchBarCode = async (req, res) => {
-    const product = await dbModel.productModel
-        .find({}, "barcodeId")
-        .populate();
-    res.json({ "all product data": product });
-};
-
-
 exports.fetchRev = async (req, res) => {
     const products = await dbModel.productModel.find({}, 'price');
     const totalPrice = products.reduce((sum, product) => {

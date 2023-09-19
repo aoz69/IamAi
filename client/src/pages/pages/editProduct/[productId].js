@@ -22,7 +22,6 @@ const EditProductForm = () => {
     name: '',
     price: '',
     stock_Count: '',
-    barcodeId: '',
     status: 'instock',
     category: '',
     date: '',
@@ -144,8 +143,8 @@ const EditProductForm = () => {
             fullWidth
             label='Barcode ID'
             variant='outlined'
-            name='barcodeId'
-            value={product.barcodeId}
+            name='stock_Count'
+            value={product.stock_Count}
             onChange={handleInputChange}
             required
           />

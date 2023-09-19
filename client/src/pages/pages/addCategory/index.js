@@ -34,7 +34,7 @@ const AddCategoryPage = () => {
           router.push('/cateTables');
         }, 2000);
       } else {
-        setAlertMessage('Failed to add category');
+        setAlertMessage('Failed to add category, Category already exists');
         setAlertType('error');
       }
     } catch (error) {

@@ -65,12 +65,6 @@ exports.fetchCate = async (req, res) => {
 };
 
 
-exports.fetchBarCode = async (req, res) => {
-    const product = await dbModel.productModel
-        .find({}, "barcodeId")
-        .populate();
-    res.json({ "all product data": product });
-};
 
 
 exports.fetchRev = async (req, res) => {

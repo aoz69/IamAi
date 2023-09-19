@@ -17,7 +17,6 @@ const AddProductForm = () => {
     name: '',
     price: '',
     stock_Count: '',
-    barcodeId: '',
     status: 'instock',
     category: '',
     date: '',
@@ -103,17 +102,6 @@ const AddProductForm = () => {
             variant='outlined'
             name='stock_Count'
             value={product.stock_Count}
-            onChange={handleInputChange}
-            required
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label='Barcode ID'
-            variant='outlined'
-            name='barcodeId'
-            value={product.barcodeId}
             onChange={handleInputChange}
             required
           />
