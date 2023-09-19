@@ -52,7 +52,7 @@ const MyPieChart = () => {
 
   return (
     <Card style={StyledCard}>
-      <Typography variant="h6">Weekly Overview</Typography>
+      <Typography variant="h6">Product Status</Typography>
       <PieChart width={300} height={300}>
         <Pie
           data={chartData}
