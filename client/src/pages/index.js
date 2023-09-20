@@ -5,6 +5,8 @@ import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts';
 import Table from 'src/views/dashboard/Table';
 import StatisticsCard from 'src/views/dashboard/StatisticsCard';
 import WeeklyOverview from 'src/views/dashboard/WeeklyOverview';
+import BarGraph from 'src/views/dashboard/barGraph';
+
 
 const Dashboard = () => {
 
@@ -18,7 +20,7 @@ const Dashboard = () => {
           <StatisticsCard />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <WeeklyOverview />
+          <BarGraph />
         </Grid>
         <Grid item xs={12}>
           <Table />

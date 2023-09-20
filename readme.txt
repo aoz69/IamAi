@@ -18,6 +18,7 @@ multiple entries of same product or category should not be possible
 NOTIFICATION BUG FIXING - 
 Date needs to be formatted in front end
 manage userss
+bargraph
 ########################################### completed: ###########################################
 
 
@@ -25,6 +26,7 @@ manage userss
 
 ########################################### need to do: ###########################################
 forcasting
+
 chat
 Notification when adding things when CRUD operation is done
 admin panel different staff different
