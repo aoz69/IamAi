@@ -111,14 +111,14 @@ const profile = () => {
     <CardContent>
       <form onSubmit={handleSaveChanges}>
         <Grid container spacing={7}>
-          <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Name"
               name="name"
               value={formData.name}
               onChange={handleFormChange}
-            />
+              />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -128,23 +128,40 @@ const profile = () => {
               name="email"
               value={formData.email}
               onChange={handleFormChange}
-            />
+              />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>Role</InputLabel>
-              <Select
-                label="Role"
-                name="role"
-                value={formData.role}
-                onChange={handleFormChange}
-                disabled
-              >
-                <MenuItem value="Admin">Admin</MenuItem>
-                <MenuItem value="User">User</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+          {userRole === "Admin" ? (
+  <Grid item xs={12} sm={6}>
+    <FormControl fullWidth>
+      <InputLabel>Role</InputLabel>
+      <Select
+        label="Role"
+        name="role"
+        value={formData.role}
+        onChange={handleFormChange}
+      >
+        <MenuItem value="Admin">Admin</MenuItem>
+        <MenuItem value="User">User</MenuItem>
+      </Select>
+    </FormControl>
+  </Grid>
+) : (
+  <Grid item xs={12} sm={6}>
+    <FormControl fullWidth>
+      <InputLabel>Role</InputLabel>
+      <Select
+        label="Role"
+        name="role"
+        value={formData.role}
+        onChange={handleFormChange}
+        disabled // Set the "disabled" property to disable the input
+      >
+        <MenuItem value="User">User</MenuItem>
+      </Select>
+    </FormControl>
+  </Grid>
+)}
+
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth

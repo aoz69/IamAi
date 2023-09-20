@@ -21,7 +21,6 @@ const fetchData = async (url) => {
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
-
 const MyBarChart = () => {
   const [chartData, setChartData] = useState(null);
 
@@ -78,8 +77,8 @@ const MyBarChart = () => {
     <Card style={StyledCard}>
       <Typography variant="h6">Product Status</Typography>
       <BarChart width={250} height={300} data={chartData}>
-        <XAxis dataKey="name" />
-        <YAxis />
+        {/* <XAxis dataKey="name" /> */}
+        <YAxis tickFormatter={(value) => Math.floor(value)} /> {/* Format Y-axis to show whole numbers */}
         <Tooltip />
         <Legend />
         {Object.keys(chartData[0]).map((key, index) => {
