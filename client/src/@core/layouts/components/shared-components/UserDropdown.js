@@ -56,6 +56,16 @@ const UserDropdown = () => {
     router.push('/profile'); 
   };
 
+
+  const handleManageClick = () => {
+    if (user.role === 'Admin') {
+      router.push('/userTable');
+    } else {
+      window.alert('Access Denied');
+    }
+  };
+  
+
   const styles = {
     py: 2,
     px: 4,
@@ -130,7 +140,7 @@ const UserDropdown = () => {
           Profile
         </Box>
       </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleClick()}>
+        <MenuItem sx={{ p: 0 }} onClick={handleManageClick}>
           <Box sx={styles}>
             <AccountOutline sx={{ marginRight: 2 }} />
             Manage User
