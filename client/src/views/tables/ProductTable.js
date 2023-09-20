@@ -23,69 +23,58 @@ const statusObj = {
   archived: { color: 'error' },
 };
 
-
-const handleScan = (data) => {
-  if (data) {
-    // When a QR code is scanned, set the scanned data
-    setScannedData(data);
-    console.log("This is handel scan")
-    fetch(`http://192.168.1.152:3100/changeStatus/${data}`, {
-      method: 'PUT', 
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: 'sold' }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert(`Product ${data.name} has been marked as sold.`);
-        } else {
-          alert(`Failed to update product status: ${data.error}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Error updating product status:', error);
-        alert(error);
-      });
-  }
-};
-
-
-const handleDeleteClick = (productId) => {
-  if (window.confirm('Are you sure you want to delete this product?')) {
-    fetch(`http://localhost:3100/delete/product/${productId}`, {
-      method: 'DELETE',
-    })
-    .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          alert(`${data.message}`);
-          window.location.reload()
-        } else {
-          alert(`Failed to delete product: ${data.error}`);
-        }
-      })
-      .catch((error) => {
-        console.error('Error deleting product:', error);
-        alert(error);
-      });
-  }
-};
-
-
-const DashboardTable = () => {
+const DashboardTable = ({ user }) => {
   const router = useRouter();
+
   const handleEditClick = (productId) => {
     router.push(`/pages/editProduct/${productId}`);
+  };
 
+  const handleDeleteClick = (productId) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      fetch(`http://localhost:3100/delete/product/${productId}`, {
+        method: 'DELETE',
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert(`${data.message}`);
+            window.location.reload();
+          } else {
+            alert(`Failed to delete product: ${data.error}`);
+          }
+        })
+        .catch((error) => {
+          console.error('Error deleting product:', error);
+          alert(error);
+        });
+    }
   };
 
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
+  const [userRole, setUserRole] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
+        // Fetch user session and get user role
+        fetch('http://localhost:3100/getSession', {
+          method: 'GET',
+          credentials: 'include',
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 'success' && data.user) {
+              setUserRole(data.user.role);
+            } else {
+              console.error('User session not found');
+            }
+          })
+          .catch((error) => {
+            console.error('Error fetching user session:', error);
+          });
+
+
     fetch('http://localhost:3100/fetchProducts')
       .then((response) => response.json())
       .then((data) => {
@@ -123,16 +112,14 @@ const DashboardTable = () => {
     setPage(0);
   };
 
-  const formattedDate = (date)=> {
-
-    let dateToFormat =  new Date(date);
+  const formattedDate = (date) => {
+    let dateToFormat = new Date(date);
     const year = dateToFormat.getFullYear().toString().slice();
-    const month = String(dateToFormat.getMonth() + 1).padStart(2, "0");
-    const day = String(dateToFormat.getDate()).padStart(2, "0");
-    const finalDate = year + "/" + month + "/" + day
-    return finalDate
-  }
-  
+    const month = String(dateToFormat.getMonth() + 1).padStart(2, '0');
+    const day = String(dateToFormat.getDate()).padStart(2, '0');
+    const finalDate = year + '/' + month + '/' + day;
+    return finalDate;
+  };
 
   return (
     <Card>
@@ -147,8 +134,12 @@ const DashboardTable = () => {
                 <TableCell>Category</TableCell>
                 <TableCell>Expiry</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Edit</TableCell>
-                <TableCell>Delete</TableCell>
+                {userRole === 'Admin' && (
+                  <>
+                    <TableCell>Edit</TableCell>
+                    <TableCell>Delete</TableCell>
+                  </>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -157,9 +148,8 @@ const DashboardTable = () => {
                 .map((row, index) => (
                   <TableRow hover key={index}>
                     <TableCell>
-                    {/* <QRCode value={handleScan} style={{ width: '100px', height: '100px' }} /> */}
-                    <QRCode value={"https://192.168.43.114:3100/changeStatus/"+row._id} style={{ width: '100px', height: '100px' }} />
-                    </TableCell>     
+                      <QRCode value={`https://192.168.43.114:3100/changeStatus/${row._id}`} style={{ width: '100px', height: '100px' }} />
+                    </TableCell>
                     <TableCell>
                       <Box>
                         <Typography>{row.name}</Typography>
@@ -174,20 +164,24 @@ const DashboardTable = () => {
                         color={statusObj[row.status]?.color || 'default'}
                         sx={{
                           height: 24,
-                          textTransform: 'capitalize',  
+                          textTransform: 'capitalize',
                         }}
                       />
                     </TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => handleEditClick(row._id)}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => handleDeleteClick(row._id)}>
-                        <DeleteForeverIcon />
-                      </IconButton>
-                    </TableCell>
+                    {userRole === 'Admin' && (
+                      <>
+                        <TableCell>
+                          <IconButton onClick={() => handleEditClick(row._id)}>
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell>
+                          <IconButton onClick={() => handleDeleteClick(row._id)}>
+                            <DeleteForeverIcon />
+                          </IconButton>
+                        </TableCell>
+                      </>
+                    )}
                   </TableRow>
                 ))}
             </TableBody>

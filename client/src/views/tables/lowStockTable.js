@@ -46,8 +46,28 @@ const DashboardTable = () => {
   const [rows, setRows] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [userRole, setUserRole] = useState('');
+
 
   useEffect(() => {
+    fetch('http://localhost:3100/getSession', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 'success' && data.user) {
+          setUserRole(data.user.role);
+        } else {
+          console.error('User session not found');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user session:', error);
+      });
+
+
+
     fetch('http://localhost:3100/fetchLowStock')
       .then((response) => response.json())
       .then((data) => {
@@ -108,8 +128,12 @@ const DashboardTable = () => {
               <TableCell>Category</TableCell>
               <TableCell>Expiry</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Edit</TableCell>
-              <TableCell>Delete</TableCell>
+              {userRole === 'Admin' && (
+                  <>
+                    <TableCell>Edit</TableCell>
+                    <TableCell>Delete</TableCell>
+                  </>
+                )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -136,16 +160,20 @@ const DashboardTable = () => {
                       }}
                     />
                   </TableCell>
-                  <TableCell>
-                    <IconButton>
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                  <IconButton onClick={() => handleDeleteClick(row._id)}>
-                    <DeleteForeverIcon />
-                  </IconButton>
-                  </TableCell>
+                  {userRole === 'Admin' && (
+                      <>
+                        <TableCell>
+                          <IconButton onClick={() => handleEditClick(row._id)}>
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
+                        <TableCell>
+                          <IconButton onClick={() => handleDeleteClick(row._id)}>
+                            <DeleteForeverIcon />
+                          </IconButton>
+                        </TableCell>
+                      </>
+                    )}
                 </TableRow>
               ))}
           </TableBody>
