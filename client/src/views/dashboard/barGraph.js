@@ -77,7 +77,7 @@ const MyBarChart = () => {
   return (
     <Card style={StyledCard}>
       <Typography variant="h6">Product Status</Typography>
-      <BarChart width={300} height={300} data={chartData}>
+      <BarChart width={250} height={300} data={chartData}>
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
