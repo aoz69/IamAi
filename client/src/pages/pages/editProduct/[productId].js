@@ -79,7 +79,7 @@ const EditProductForm = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            data: `Product with ID ${productId} updated successfully`,
+            data: `Product ${product.name} was updated recently`,
           }),
         });
   
