@@ -26,8 +26,6 @@ bargraph
 
 ########################################### need to do: ###########################################
 forcasting
-
 chat
-Notification when adding things when CRUD operation is done
 admin panel different staff different
 ########################################### need to do: ########################################### 
