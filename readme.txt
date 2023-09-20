@@ -19,6 +19,7 @@ NOTIFICATION BUG FIXING -
 Date needs to be formatted in front end
 manage userss
 bargraph
+admin panel different staff different
 ########################################### completed: ###########################################
 
 
@@ -27,5 +28,4 @@ bargraph
 ########################################### need to do: ###########################################
 forcasting
 chat
-admin panel different staff different
 ########################################### need to do: ########################################### 

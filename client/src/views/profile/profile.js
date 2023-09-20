@@ -18,8 +18,27 @@ const profile = () => {
     newPassword: '',
   });
   const [updateStatus, setUpdateStatus] = useState(null);
+  const [userRole, setUserRole] = useState('');
+
 
   useEffect(() => {
+    fetch('http://localhost:3100/getSession', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 'success' && data.user) {
+          setUserRole(data.user.role);
+        } else {
+          console.error('User session not found');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user session:', error);
+      });
+
+      
     fetch('http://localhost:3100/getSession', {
       method: 'GET',
       credentials: 'include',
@@ -119,6 +138,7 @@ const profile = () => {
                 name="role"
                 value={formData.role}
                 onChange={handleFormChange}
+                disabled
               >
                 <MenuItem value="Admin">Admin</MenuItem>
                 <MenuItem value="User">User</MenuItem>
