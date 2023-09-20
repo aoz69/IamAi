@@ -9,12 +9,11 @@ const navigation = () => {
       path: '/profile'
     },
     {
-      sectionTitle: 'Actions'
+      title: 'Manager Users',
+      path: '/userTable'
     },
     {
-      title: 'Login',
-      path: '/pages/login',
-      openInNewTab: true
+      sectionTitle: 'Actions'
     },
     {
       title: 'Register new user',

@@ -7,7 +7,7 @@ const session = require('express-session');
 exports.fetchUsers = async (req, res) => {
     try {
         const users = await dbModel.userModel
-            .find({}, 'role password')
+            .find({})
         res.json({ "data": users });
 
 
